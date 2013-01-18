@@ -1,0 +1,7 @@
+参考http://www.izzywebsite.com/tools/jquery-color-picker实现，
+利用jquery-ui重写了该组件
+
+可以动态的添加、取消
+
+回头有时间写成jquery-ui通用的组件
+

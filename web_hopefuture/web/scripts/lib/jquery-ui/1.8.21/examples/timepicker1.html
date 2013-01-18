@@ -1,0 +1,36 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+<head>
+<title>timepicker demo</title>
+<script type="text/javascript" src="../../jquery/jquery-1.7.2.js"></script>
+<script type="text/javascript"
+	src="../js/jquery-ui-1.8.21.custom.min.js"></script>
+<script type="text/javascript"
+	src="../js/custom/datetimepicker/jquery-ui-timepicker-addon.js"></script>
+<link rel="stylesheet" type="text/css"
+	href="../css/smoothness/jquery-ui-1.8.21.custom.css" />
+
+<link rel="stylesheet" type="text/css"
+	href="../js/custom/datetimepicker/timepicker.css" />
+
+</head>
+<body style="font: 9px Arial, Helvetica, sans-serif;">
+	<input type="text" name="example" id="example" value="" />
+
+	<script type="text/javascript">
+		$('#example').datetimepicker({
+			minDate : new Date(),
+			changeMonth: true,
+			changeYear: true
+		});
+	</script>
+
+	<input type="text" name="example2" id="example2" value="" />
+
+	<script type="text/javascript">
+		$('#example2').datetimepicker({
+			minDate : new Date(2010, 11, 20, 8, 30)
+		});
+	</script>
+</body>
+</html>

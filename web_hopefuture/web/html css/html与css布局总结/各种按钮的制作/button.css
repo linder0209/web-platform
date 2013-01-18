@@ -1,0 +1,39 @@
+@charset "utf-8";
+
+html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td
+	{
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-size: 12px;
+	font-family: "微软雅黑", "宋体";
+}
+
+a {
+	display: inline-block;
+	height: 37px;
+	line-height: 37px;
+	text-align: center;
+	background: url(images/btn_bg.gif) no-repeat 0px 0px;
+	color: #d84700;
+	font-size: 14px;
+	font-weight: bold;
+	text-decoration: none;
+	padding-left: 18px;
+}
+
+a span {
+	display: inline-block;
+	background: url(images/btn_bg.gif) no-repeat right 0px;
+	padding-right: 18px;
+}
+
+a:hover {
+	background: url(images/btn_bg.gif) no-repeat 0px -37px;
+}
+
+a:hover span {
+	background: url(images/btn_bg.gif) no-repeat right -37px;
+}

@@ -1,0 +1,15 @@
+{
+    "projectName" : "builderJs",
+	"deployDir" : "../js-tmp",
+	"licenseText" : "jQuery UI 1.8.21\n\nCopyright 2012, AUTHORS.txt (http://jqueryui.com/about)\nDual licensed under the MIT or GPL Version 2 licenses.\nhttp://jquery.org/license\n\nhttp://docs.jquery.com/UI",
+	"pkgs" : [ {
+		"name" : "Your Theme",
+		"file" : "jquery.ztree.core-3.2.js",
+		"isDebug" : true,
+		"fileIncludes" : [{
+			"text" : "jquery.ztree.core-3.2.js",
+			"path" : "../jscompressor-src/"
+		}]
+	} ],
+	"resources" : []
+}

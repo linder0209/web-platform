@@ -1,0 +1,14 @@
+1、ie中cookies在硬盘上保存的位置
+路径为C:\Users\{当前用户名}\AppData\Roaming\Microsoft\Windows\Cookies
+要注意有些系统隐藏了与cookies相关的文件夹，你看不到，文件夹选项中有个“隐藏受保护的操作系统文件”，选中再看。
+另外，win7中的cookies文件名没有固定命名规则，是随即命名的。
+
+
+2、session其实也是利用cookie来实现的
+
+有两种类型的cookie：
+
+a、持久性cookie，会被存储到客户端的硬盘上
+b、会话性cookie，不会存储到客户端硬盘上，只会保存到浏览器当前进程内存中，当浏览器销毁或关闭，该cookie就销毁了。
+
+3、可以在internet选项、隐私、高级中设置cookie

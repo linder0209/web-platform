@@ -1,0 +1,41 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html class="x-border-box">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<link rel="stylesheet" href="panel.css" />
+
+<style type="text/css">
+body {
+	padding: 32px 20px 20px;
+}
+</style>
+<title>面板圆角的实现——firefox基于css3实现</title>
+</head>
+
+<body>
+<!-- 也可以不设置 s-panel的高度和宽度，而通过s-panel-mc来动态或设置高度来调整整个panel的大小 -->
+<!-- 关于套用的背景图，其实做两张即可，一个是四个角加上下边的，另一个是左右两个边的；第一张图做成透明的，保存为gif和png都可以 -->
+	<div class="s-panel" style="width: 350px;height:300px;">
+		<div class="s-panel-tl">
+			<div class="s-panel-tr">
+				<div class="s-panel-tc"></div>
+			</div>
+		</div>
+		<div class="s-panel-ml">
+			<div class="s-panel-mr">
+				<div class="s-panel-mc" style="height:100px;">&nbsp;</div>
+			</div>
+		</div>
+		<div class="s-panel-bl">
+			<div class="s-panel-br">
+				<div class="s-panel-bc"></div>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
+
+
+

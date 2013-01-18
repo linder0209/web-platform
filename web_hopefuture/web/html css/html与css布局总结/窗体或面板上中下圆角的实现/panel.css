@@ -1,0 +1,115 @@
+@charset "utf-8";
+
+html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td
+	{
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-size: 12px;
+	font-family: "微软雅黑", "宋体";
+}
+
+/**
+ * 面板圆角样式 start
+**/
+
+.s-panel{
+	overflow: hidden;
+}
+
+/**
+ * 利用css3实现
+**/
+.s-border-box, .s-border-box * {
+    -moz-box-sizing: border-box;
+}
+
+
+.s-panel-default-framed {
+    background-color: #DFE9F6;
+    border-radius: 4px 4px 4px 4px;/*圆角*/
+    border: 1px solid #99BCE8;
+    padding: 4px;
+    box-shadow: 0 0 4px rgb(136, 136, 136);/*阴影效果*/
+}
+
+/**不支持css3用以下实现，比较繁琐**/
+
+.s-panel-tl, .s-panel-tr, .s-panel-tc, .s-panel-bl, .s-panel-br, .s-panel-bc{
+	background-image: url(images/panel-corners.gif);
+	background-repeat: no-repeat;
+	height:4px;
+}
+
+.s-panel-tl {
+	background-position:0 -8px;
+	padding-left:4px;
+    zoom:1;
+}
+
+.s-panel-tr {
+	background-position:right -12px;
+	padding-right:4px;
+    zoom:1;
+}
+
+.s-panel-tc {
+	background-position:0 0;
+	background-repeat:repeat-x;
+	overflow:hidden;
+}
+
+/* fix ie7 strict mode bug */
+.ext-strict .ext-ie7 .s-panel-tc {
+    overflow: visible;
+}
+
+.s-panel-ml, .s-panel-mr{
+	background-image: url(images/panel-sides.gif);
+	background-repeat: repeat-y;
+}
+
+.s-panel-ml{
+	padding-left:4px;
+    zoom:1;
+}
+
+.s-panel-mr {
+	background-position:right 0;
+	padding-right:4px;
+    zoom:1;
+}
+
+.s-panel-mc {
+    background-color: #DFE8F6;
+    padding:0;
+    margin:0;
+    padding-top:6px;
+}
+
+.s-panel-bl {
+	background-position:0 -16px;
+	padding-left:4px;
+    zoom:1;
+}
+
+.s-panel-br {
+	background-position:right -20px;
+	padding-right:4px;
+    zoom:1;
+}
+
+
+.s-panel-bc {
+	background-position:0 -4px;
+	background-repeat:repeat-x;
+	overflow:hidden;
+    zoom:1;
+}
+
+/**面板圆角样式 end**/
+
+
+

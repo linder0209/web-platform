@@ -1,0 +1,5 @@
+该colorpicker是模仿office实现
+
+该版本不是正式版本
+
+参考地址：http://www.codeproject.com/Articles/452401/ColorPicker-a-jQuery-UI-Widget

@@ -1,0 +1,31 @@
+清理浮动有很多种方式，像使用 br 标签自带的 clear 属，使用元素的 overflow，使用空标签来设置 clear:both 等等。但考虑到兼容问题和语义化的问题，一般我们都会使用如下代码来清理浮动。
+
+/* 清理浮动 */
+.clearfix:after {
+ visibility:hidden;
+ display:block;
+ font-size:0;
+ content:" ";
+ clear:both;
+ height:0;
+}
+.clearfix {
+ zoom:1;
+}
+其原理是，在「高级」浏览器中使用 :after 伪类在浮动块后面加上一个非 display:none 的不可见块状内容来，并给它设置 clear:both 来清理浮动。在 ie6 和 7 中给浮动块添加 haslayout 来让浮动块撑高并正常影响文档流。
+
+上面的代码应该是现在主流的清理浮动方式。现在支付宝就使用这样的方式。而现在，Nicolas Gallagher 给出了一个更简洁的方案：
+
+.cf:before, .cf:after {
+    content:"";
+    display:table;
+}
+.cf:after {
+    clear:both;
+}
+.cf {
+    zoom:1;
+}
+原理还是一样的。使用 :after 伪类来提供浮动块后的 clear:both。不同的是，隐藏这个空白使用的是 display: table。而不是设置 visibility:hidden;height:0;font-size:0; 这样的 hack。
+
+值得注意的是这里中的 :before 伪类。其实他是来用处理 top-margin 边折叠的，跟清理浮动没有多大的关系。但因为浮动会创建 block formatting context，这样浮动元素上的另而一元素上如果刚好有 margin-bottom 而这个浮动元素刚好有margin-top 的话，应该让他们不折叠（虽然这种情况并不常见）。

@@ -1,0 +1,9 @@
+1、源代码中方法
+constructTr = function(id, hide, altClass, rd, cur) 
+为当有数据时加载内容
+
+2、方法addCell为添加每行每列数据
+
+3、viewrecords 设为false，分页标签不显示右侧的内容
+
+4、loadComplete，数据加载完执行该方法

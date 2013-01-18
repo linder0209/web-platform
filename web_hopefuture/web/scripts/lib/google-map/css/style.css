@@ -1,0 +1,55 @@
+body{
+	font-family:Trebuchet MS,​Tahoma,​Verdana,​Arial,​sans-serif;
+	font-size:12px;
+}
+
+.infowindow_hidden_scrollbar {
+    height: auto !important;
+    min-height: 100px;
+}
+fieldset {
+    background: none repeat scroll 0 0 #DEF1F8;
+    border: 1px solid #0E80B2;
+    clear: both;
+    margin: 0 0 30px 0.3em;
+    padding: 1em 1.4em 1.4em;
+}
+
+legend {
+    background: none repeat scroll 0 0 #0F81B3;
+    border: 1px solid #0F81B3;
+    color: #FFFFFF;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 5px;
+    text-transform: capitalize;
+}
+.ip_title {
+    margin-right: 10px;
+    text-align: right;
+    width: 40px;
+}
+.ip_content {
+    width: 90px;
+}
+
+.Location_correct {
+    clear: both;
+    height: auto !important;
+    margin-left: 20px;
+    margin-top: 20px;
+    min-height: 100px;
+    text-align: left;
+}
+.Location_correct a,.infowindow_hidden_scrollbar a{
+    color: #009DDC;
+    cursor: pointer;
+    text-decoration: none;
+}
+a{
+    color: #009DDC !important;
+}
+.infowindow_hidden_scrollbar {
+    height: auto !important;
+    min-height: 100px;
+}

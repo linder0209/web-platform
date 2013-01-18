@@ -1,0 +1,17 @@
+jquery验证插件：用来处理表单验证
+
+1、可以设置验证通过回调函数
+
+//设置全局的，其中form参数指表单本身
+$.validator.setDefaults({
+	submitHandler: function(from) { alert("submitted!"); }
+});
+
+//针对某个表单设置
+$("#commentForm").validate({
+	submitHandler: function(form) { alert("submitted!"); }
+});
+
+2、源代码
+
+showLabel函数可以设置修改错误提示方式

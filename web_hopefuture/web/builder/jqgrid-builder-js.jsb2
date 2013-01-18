@@ -1,0 +1,63 @@
+{
+    "projectName" : "builderJs",
+	"deployDir" : "../js-tmp",
+	"licenseText" : "jQuery UI 1.8.21\n\nCopyright 2012, AUTHORS.txt (http://jqueryui.com/about)\nDual licensed under the MIT or GPL Version 2 licenses.\nhttp://jquery.org/license\n\nhttp://docs.jquery.com/UI",
+	"pkgs" : [ {
+		"name" : "Your Theme",
+		"file" : "jquery-ui-1.8.21.custom-all.js",
+		"isDebug" : true,
+		"fileIncludes" : [{
+			"text" : "grid.base.js",
+			"path" : "../jscompressor-src/"
+		},{
+			"text" : "grid.custom.js",
+			"path" : "../jscompressor-src/"
+		},{
+			"text" : "jqModal.js",
+			"path" : "../jscompressor-src/"
+		},{
+			"text" : "jqDnR.js",
+			"path" : "../jscompressor-src/"
+		},{
+			"text" : "JsonXml.js",
+			"path" : "../jscompressor-src/"
+		},{
+			"text" : "jquery.fmatter.js",
+			"path" : "../jscompressor-src/"
+		},{
+			"text" : "grid.common.js",
+			"path" : "../jscompressor-src/"
+		},{
+			"text" : "grid.filter.js",
+			"path" : "../jscompressor-src/"
+		},{
+			"text" : "grid.formedit.js",
+			"path" : "../jscompressor-src/"
+		},{
+			"text" : "grid.inlinedit.js",
+			"path" : "../jscompressor-src/"
+		},{
+			"text" : "grid.celledit.js",
+			"path" : "../jscompressor-src/"
+		},{
+			"text" : "grid.subgrid.js",
+			"path" : "../jscompressor-src/"
+		},{
+			"text" : "grid.treegrid.js",
+			"path" : "../jscompressor-src/"
+		},{
+			"text" : "grid.grouping.js",
+			"path" : "../jscompressor-src/"
+		},{
+			"text" : "grid.import.js",
+			"path" : "../jscompressor-src/"
+		},{
+			"text" : "grid.jqueryui.js",
+			"path" : "../jscompressor-src/"
+		},{
+			"text" : "grid.tbltogrid.js",
+			"path" : "../jscompressor-src/"
+		}]
+	} ],
+	"resources" : []
+}

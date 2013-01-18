@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="../jquery.cleditor.css" />
+
+<script src="../../../jquery/jquery-1.7.2.js"></script>
+<script type="text/javascript" src="../jquery.cleditor.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var myCleditor = $("#input").cleditor();
+		$('#button1').click(function(){
+			myCleditor[0].clear();
+		});
+		$('#button2').click(function(){
+			console.info($("#input").val());
+		});
+		$('#button3').click(function(){
+		    $('#input').val('<h1>aaaaa</h1>');  
+		    myCleditor[0].updateFrame();  
+		});
+	});
+</script>
+
+</head>
+<body>
+	<textarea id="input" name="input"></textarea>
+	
+	<button id="button1">清空</button>
+	<button id="button2">获取源代码</button>
+	<button id="button3">设置代码</button>
+</body>
+</html>

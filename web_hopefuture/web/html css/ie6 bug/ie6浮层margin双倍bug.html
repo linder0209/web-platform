@@ -1,0 +1,22 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>ie6浮层margin双倍bug</title>
+
+</head>
+<body>
+	<div style="clear: both;">
+		<div style="border: 1px solid blue; float: left; margin: 0 100px;">
+			浮层left中margin-left会产生双倍bug</div>
+		<div style="width: 100px; border: 1px solid blue; float: left;">
+			与left浮层比较</div>
+
+		<div style="float: right; margin: 0 100px; border: 1px solid red;">
+			浮层right中margin-right会产生双倍bug</div>
+		<div style="width: 100px; border: 1px solid blue; float: right;">
+			与right浮层比较</div>
+		<div style="clear: both;"></div>
+	</div>
+</body>
+</html>

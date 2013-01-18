@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Cookies demo</title>
+
+<script type="text/javascript">
+	function setCookies(){
+		var today = new Date(),
+			pastDue = 24 * 60 * 60 * 1000 * 31,
+			expiresDate = new Date();
+		
+		expiresDate.setTime(today.getTime() + pastDue);
+		
+		document.cookie = "name=wangyanjun;expires=" + expiresDate.toGMTString();//注意必须是expiresDate.toGMTString()这种格式
+		
+		document.writeln('cookie的内容：' + document.cookie);
+		document.writeln('cookie的过期时间：' + expiresDate.toGMTString());
+	}
+
+</script>
+</head>
+<body>
+	<input type="button" value="点击我设置cookies" onclick="javascript:setCookies();" />
+</body>
+</html>

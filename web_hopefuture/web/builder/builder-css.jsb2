@@ -1,0 +1,27 @@
+{
+    "projectName" : "builderCss",
+	"deployDir" : "css-tmp",
+	"licenseText" : "EverBridge Portal Library 1.0\nCopyright(c) 2011-2012 , Inc.\nlicensing@everbridge.com\nhttp://www.everbridge.com/",
+	"pkgs" : [ {
+		"name" : "Your Theme",
+		"file" : "everbridge.css",
+		"isDebug" : true,
+		"fileIncludes" : [{
+			"text" : "gis.css",
+			"path" : "../stylesheets/"
+		},{
+			"text" : "gis.css",
+			"path" : "../stylesheets/"
+		},{
+			"text" : "gis.css",
+			"path" : "../stylesheets/"
+		},{
+			"text" : "gis.css",
+			"path" : "../stylesheets/"
+		},{
+			"text" : "gis.css",
+			"path" : "../stylesheets/"
+		}]
+	} ],
+	"resources" : []
+}

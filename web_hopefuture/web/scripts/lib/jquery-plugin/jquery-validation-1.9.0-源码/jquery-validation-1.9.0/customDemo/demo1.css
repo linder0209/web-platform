@@ -1,0 +1,92 @@
+
+/**********************************
+
+Name: eb_validation Styles
+
+***********************************/
+/* form.cmxform { */
+/* 	width: 370px; */
+/* 	font-size: 1.0em; */
+/* 	color: #333; */
+/* } */
+
+/* form.cmxform legend { */
+/* 	padding-left: 0; */
+/* } */
+
+/* form.cmxform legend, form.cmxform label { */
+/* 	color: #333; */
+/* } */
+
+/* form.cmxform fieldset { */
+/* 	border: none; */
+/* 	border-top: 1px solid #C9DCA6; */
+/* 	background: url(cmxform-fieldset.gif) left bottom repeat-x; */
+/* 	background-color: #F8FDEF; */
+/* } */
+
+/* form.cmxform fieldset fieldset { */
+/* 	background: none; */
+/* } */
+
+/* form.cmxform fieldset p, form.cmxform fieldset fieldset { */
+/* 	padding: 5px 10px 7px; */
+/* 	background: url(cmxform-divider.gif) left bottom repeat-x; */
+/* } */
+
+label.error {
+	background: url("images/error_16.png") no-repeat;
+    cursor: pointer;
+    display: inline-block;
+    height: 16px;
+    margin-left: 5px;
+    vertical-align: middle;
+    width: 16px;
+}
+
+
+/* div.error { display: none; } */
+/* input {	border: 1px solid black; } */
+/* input.checkbox { border: none } */
+input[type="text"], input[type="password"], textarea { 
+	border:1px solid #c9c9c9; 
+	padding:3px; 
+	margin-bottom:5px; 
+	background:#fff;
+	-webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px
+    box-shadow: 0 1px 0 #F1F1F1, 0 1px 1px #E0E0E0 inset;
+}
+select {
+	border:1px solid #c9c9c9; 
+    font-size: 1em;
+    margin-bottom: 5px;
+    padding: 3px 0px 3px 3px;
+	-webkit-border-radius:3px; -moz-border-radius:3px; border-radius:3px
+}
+input:focus,textarea:focus,select:focus { border: 1px solid #4F9AFF; }
+input.error, textarea.error,select.error { border: 1px solid #BE2134; }
+/* form.cmxform .gray * { color: gray; } */
+
+.errorToolTip{
+	position:absolute;
+	background: url("images/error-right-bg.png") no-repeat;
+	display: inline-block;
+	height: 26px;
+	margin-left: 5px;
+    position: absolute;
+    white-space:nowrap;
+    z-index:2000;
+    display:none;
+}
+
+.errorToolTip span {
+	background-color: #FFFFCB;
+	color: #BE1E36;
+	border: 1px solid #FF9900;
+	border-left: 0;
+	height: 24px;
+	line-height: 24px;
+	padding: 0 15px;
+	display: inline-block;
+	margin-left: 7px;
+}

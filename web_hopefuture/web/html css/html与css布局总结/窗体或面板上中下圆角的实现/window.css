@@ -1,0 +1,58 @@
+@charset "utf-8";
+
+html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td
+	{
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-size: 12px;
+	font-family: "微软雅黑", "宋体";
+}
+
+.x-border-box,.x-border-box * {
+	-moz-box-sizing: border-box;
+}
+
+.x-css-shadow {
+	border-radius: 5px 5px 5px 5px;
+	box-shadow: 0 0 4px rgb(136, 136, 136);
+}
+
+.x-window-default {
+	overflow: hidden;
+	position: absolute !important;
+	background-color: #CED9E7;
+	border-radius: 5px 5px 5px 5px;
+	border : 1px solid #A2B1C5;
+	padding: 4px;
+	box-shadow: 0 1px 0 0 #ECF2FB inset, 0 -1px 0 0 #ECF2FB inset, -1px 0 0
+		0 #ECF2FB inset, 1px 0 0 0 #ECF2FB inset;
+}
+
+.x-window-header-default {
+	border-color: #A2B1C5;
+	font-size: 11px;
+	position: absolute !important;
+	background-color: #CED9E7;
+	border-radius: 5px 5px 0 0;
+	border-style: solid;
+	border-width: 1px 1px 0;
+	padding: 4px 5px 0;
+	box-shadow: 0 1px 0 0 #ECF2FB inset, -1px 0 0 0 #ECF2FB inset, 1px 0 0 0
+		#ECF2FB inset;
+}
+
+.x-window-body {
+	border-style: solid;
+	overflow: hidden;
+	position: relative;
+}
+
+.x-window-body-default {
+	background: none repeat scroll 0 0 #DFE8F6;
+	border-color: #99BBE8;
+	border-width: 1px;
+	color: black;
+}

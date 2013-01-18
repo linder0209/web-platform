@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>jQuery UI Progressbar - Default functionality</title>
+<link rel="stylesheet" href="../../themes/base/jquery.ui.all.css">
+<script src="../../jquery-1.7.2.js"></script>
+<script src="../../ui/jquery.ui.core.js"></script>
+<script src="../../ui/jquery.ui.widget.js"></script>
+<script src="../../ui/jquery.ui.progressbar.js"></script>
+<style>
+	#progressbar{
+	   height:5px;
+	   width:100px;
+	}
+</style>
+<link rel="stylesheet" href="../demos.css">
+<script>
+	$(function() {
+		var timer;//计时器
+		$("#progressbar").progressbar({
+			value : 0,
+			//disabled: true,
+			create: function(event, ui) {},
+			change: function(event, ui) {
+			},
+			complete: function(event, ui) {
+				clearInterval(timer);
+			}
+		});
+		//鼠标点一次，进度条往前走一步
+		$('#progress').click((function(){
+			var num = 1;
+			return function(e){
+				$("#progressbar").progressbar('value',num++);
+			}
+		})());
+		
+		$('#start').click((function(){
+			var num = 1;
+			return function(e){
+				timer = setInterval(function(){
+					$("#progressbar").progressbar('value',num++);
+				},100);
+			}
+		})());
+		
+		$('#pause').click(function(){
+			clearInterval(timer);
+		});
+		
+		$('#end').click(function(){
+			clearInterval(timer);
+		});
+		
+	});
+</script>
+</head>
+<body>
+
+	<div class="demo">
+
+		<div id="progressbar"></div>
+
+	</div>
+	<!-- End demo -->
+
+
+
+	<div class="demo-description">
+		<p>Default determinate progress bar.</p>
+	</div>
+	<!-- End demo-description -->
+	
+	<button id="start">Start</button>
+    <button id="pause">Pause</button>
+    <button id="end">End</button>
+    <button id="progress">Change</button>
+</body>
+</html>

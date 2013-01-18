@@ -1,0 +1,59 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html class="x-border-box">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+<style type="text/css">
+body {
+	padding: 32px 20px 20px;
+}
+
+div {
+	margin: 20px;
+}
+
+span,b {
+	display: inline-block;
+	border-style: solid;
+	border-width: 10px;
+}
+
+.arrows-left {
+	border-color: transparent #EFEFEF transparent transparent;
+}
+
+.arrows-right {
+	border-color: transparent transparent transparent #EFEFEF;
+}
+
+.arrows-top {
+	border-color: #EFEFEF transparent transparent transparent;
+}
+
+.arrows-bottom {
+	border-color: transparent transparent #EFEFEF transparent;
+}
+</style>
+<title>用样式来实现箭头</title>
+</head>
+
+<body>
+	<p>以下是用css来控制箭头方向的，标签不限定，可以是任意标签</p>
+	<div>
+		<h1>左箭头</h1>
+		<b class="arrows-left"></b>
+	</div>
+	<div>
+		<h1>右箭头</h1>
+		<b class="arrows-right"></b>
+	</div>
+	<div>
+		<h1>上箭头</h1>
+		<span class="arrows-top"></span>
+	</div>
+	<div>
+		<h1>下箭头</h1>
+		<span class="arrows-bottom"></span>
+	</div>
+</body>
+</html>
