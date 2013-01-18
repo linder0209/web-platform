@@ -24,7 +24,7 @@ $.cleanData = function( elems ) {
 	_cleanData( elems );
 };
 
-//重要方法，jQuery组件的注册
+   //重要方法，jQuery组件的创建与注册
     $.widget = function(name, base, prototype) {
         var fullName, existingConstructor, constructor, basePrototype,
                 namespace = name.split(".")[ 0 ];
