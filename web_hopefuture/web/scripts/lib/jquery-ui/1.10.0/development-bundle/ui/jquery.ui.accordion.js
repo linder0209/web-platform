@@ -30,7 +30,7 @@ $.widget( "ui.accordion", {
 		animate: {},
 		collapsible: false,
 		event: "click",
-		header: "> li > :first-child,> :not(li):even",
+		header: "> li > :first-child,> :not(li):even",//默认选择li中第一个子元素，或者不是li时选择偶数行，从0开始
 		heightStyle: "auto",
 		icons: {
 			activeHeader: "ui-icon-triangle-1-s",
