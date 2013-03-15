@@ -1,0 +1,22 @@
+使用 Whatever:hover，该组件利用 IE 特有的 CSS 行为（behavior）及通过 JavaScript 来模拟 ':hover' 伪类的效果。 
+
+官网：http://peterned.home.xs4all.nl/csshover.html
+
+
+使用方法
+
+1、首先引入csshover3.htc，注意服务器端需要支持.htc格式的读取。Make sure your webserver sends htc files with the mime-type set to text/x-component. 
+body { behavior: url("csshover3.htc"); }
+
+2、用法
+
+li ul { display:none; } 
+li:hover ul { display:block; }
+
+
+#menu li:hover ul { ... }
+
+Version 3 supports :hover and :active for IE6+, and additionally :focus for IE7 and IE8. Because expressions don't work in IE8 standards mode, 
+whatever:hover will only run on IE8 in quirks mode. 
+It shouldn't be needed in IE8 standards anyway. 
+CSSHover is free software, licensed under LGPL. You can use it both for commercial and non-commercial sites.

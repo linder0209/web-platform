@@ -1,0 +1,5 @@
+官方：http://jquery.lukelutman.com/plugins/pseudo/
+
+参考例子
+
+http://qianduanxiangzi.iteye.com/blog/1313859
