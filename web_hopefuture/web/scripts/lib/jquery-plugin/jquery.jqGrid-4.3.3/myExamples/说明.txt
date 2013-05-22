@@ -1,0 +1,4 @@
+水平滚动条的设置
+
+shrinkToFit:false,
+autoScroll: true,

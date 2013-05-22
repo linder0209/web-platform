@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+
+        <!--<img dynsrc="wav/16b_44k_2c.wav" />-->
+        
+        
+        <embed src="wav/16b_44k_2c.wav" />
+        
+        
+        
+        <button type="button" id="play">play</button>
+        <script type="text/javascript" src="../../scripts/lib/jquery/jquery-1.7.2.js"></script>
+
+        <script type="text/javascript">
+            $(function() {
+               $('#play').click(function(){
+                   if(jQuery.browser['msie']){//IE
+                        $('<bgsound src="wav/16b_44k_2c.wav" />').appendTo(document.body);
+                   }else if(window.Audio){
+                        var audio = new Audio("wav/16b_44k_2c.wav"); 
+                        audio.play();
+                   }
+               });
+            });
+        </script>
+    </body>
+</html>

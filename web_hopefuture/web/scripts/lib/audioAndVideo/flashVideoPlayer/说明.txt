@@ -1,0 +1,10 @@
+该插件还不错，只可惜只支持mp3格式的，不支持wav格式的，遗憾
+
+官方
+http://wpaudioplayer.com/
+
+该插件是 wordpress的插件
+
+在非 WordPress 站点，该播放器也可以使用，可以参考
+
+http://www.macloo.com/examples/audio_player/

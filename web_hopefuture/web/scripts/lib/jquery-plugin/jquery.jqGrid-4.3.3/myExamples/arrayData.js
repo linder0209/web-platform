@@ -29,7 +29,7 @@ $(document).ready(
 						}, {
 							name : 'tax',
 							index : 'tax',
-							width : 50%,
+							width : 50,
 							sorttype : "float"
 						}, {
 							name : 'total',

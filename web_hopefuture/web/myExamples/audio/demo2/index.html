@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+        
+        <button id="test1">测试</button>
+        <script type="text/javascript" src="../../../scripts/lib/jquery/jquery-1.7.2.js"></script>
+        <script type="text/javascript" src="demo.js"></script>
+        
+        <script type="text/javascript">
+            $(function() {
+                //audio使用:
+                $("#test1").unbind("click").bind("click", function() {
+                    //gid 表示歌曲id,只是一个表示，没有值不影响播放
+                    //song_fileUrl :播放歌曲地址，不能为空，有效地址
+                    g_audio.elems["id"] = 'qqqqq';
+                    g_audio.push({song_id: 'qqqqq', song_fileUrl: '16b_44k_2c.wav'});
+                });//绑定事件
+            });
+        </script>
+    </body>
+</html>

@@ -3,11 +3,75 @@ $(document).ready(function() {
 		url : 'jsonData.json?q=2',
 		datatype : "json",
 		height:300,
-		autowidth : true,
+        width:900,
 		autoheight : true,
+        shrinkToFit:false,//设置滚动条
+		autoScroll: true,
 		colNames : ['Inv No', 'Date', 'Client', 'Amount', 'Tax', 'Total',
+				'Notes','Inv No', 'Date', 'Client', 'Amount', 'Tax', 'Total',
+				'Notes','Inv No', 'Date', 'Client', 'Amount', 'Tax', 'Total',
 				'Notes'],
 		colModel : [{
+					name : 'id',
+					index : 'id',
+					width : 55
+				}, {
+					name : 'invdate',
+					index : 'invdate',
+					width : 90,
+					align : 'left'
+				}, {
+					name : 'name',
+					index : 'name asc, invdate',
+					width : 100
+				}, {
+					name : 'amount',
+					index : 'amount',
+					width : 80
+				}, {
+					name : 'tax',
+					index : 'tax',
+					width : 80
+				}, {
+					name : 'total',
+					index : 'total',
+					width : 80
+				}, {
+					name : 'note',
+					index : 'note',
+					width : 150,
+					sortable : false
+				},{
+					name : 'id',
+					index : 'id',
+					width : 55
+				}, {
+					name : 'invdate',
+					index : 'invdate',
+					width : 90,
+					align : 'left'
+				}, {
+					name : 'name',
+					index : 'name asc, invdate',
+					width : 100
+				}, {
+					name : 'amount',
+					index : 'amount',
+					width : 80
+				}, {
+					name : 'tax',
+					index : 'tax',
+					width : 80
+				}, {
+					name : 'total',
+					index : 'total',
+					width : 80
+				}, {
+					name : 'note',
+					index : 'note',
+					width : 150,
+					sortable : false
+				},{
 					name : 'id',
 					index : 'id',
 					width : 55
