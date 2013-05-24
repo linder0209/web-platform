@@ -289,7 +289,9 @@ public class Fc3dAnalyse {
                 continue;
             }
             Arrays.sort(arrayStr);
-            str = Arrays.toString(arrayStr);
+            str = Arrays.toString(arrayStr).replaceAll(" ", "");
+            int len = str.length();
+            str = str.substring(1, len - 1);
             if(!list.contains(str)){
                 list.add(str);
             }
@@ -308,9 +310,31 @@ public class Fc3dAnalyse {
         
     }
     
-    
+    /**
+     * 给定范围，统计前 historyPeriods 期没有开出的结果再接下来多少期会中奖
+     */
+    public static void successPeriods(int historyPeriods) throws Exception {
+        List<String> list = new ArrayList<String>();
+        File sourceFile = new File(filePath + "dest5.txt");
+        BufferedReader reader = new BufferedReader(new FileReader(sourceFile));
+        while (reader.ready()) {
+            list.add(reader.readLine());
+        }
+        reader.close();
+        
+        sourceFile = new File(filePath + "source3.txt");
+        reader = new BufferedReader(new FileReader(sourceFile));
+        String str;
+       List<String> data = new ArrayList<String>();
+        while (reader.ready()) {
+            str = reader.readLine().split(":")[1];
+            data.add(str);
+        }
+        reader.close();
+    }
     
     public static void main(String... args) throws Exception {
 
+        combinationClearDouble();
     }
 }
