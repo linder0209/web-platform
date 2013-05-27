@@ -313,28 +313,100 @@ public class Fc3dAnalyse {
     /**
      * 给定范围，统计前 historyPeriods 期没有开出的结果再接下来多少期会中奖
      */
-    public static void successPeriods(int historyPeriods) throws Exception {
-        List<String> list = new ArrayList<String>();
+    public static void successPeriods() throws Exception {
+        List<String> source = new ArrayList<String>();
         File sourceFile = new File(filePath + "dest5.txt");
         BufferedReader reader = new BufferedReader(new FileReader(sourceFile));
         while (reader.ready()) {
-            list.add(reader.readLine());
+            source.add(reader.readLine());
+        }
+        reader.close();
+
+        sourceFile = new File(filePath + "source3.txt");
+        reader = new BufferedReader(new FileReader(sourceFile));
+        String[] arrayStr;
+        String[] issue;
+        List<String[]> data = new ArrayList<String[]>();
+        while (reader.ready()) {
+            arrayStr = reader.readLine().split(":");
+            issue = new String[2];
+            issue[0] = arrayStr[0];
+            issue[1] = arrayStr[1].replace(" ", "");
+            data.add(issue);
         }
         reader.close();
         
-        sourceFile = new File(filePath + "source3.txt");
+        //频率最高的组合
+        sourceFile = new File(filePath + "rate.txt");
         reader = new BufferedReader(new FileReader(sourceFile));
-        String str;
-       List<String> data = new ArrayList<String>();
+        List<String> rate = new ArrayList<String>();
         while (reader.ready()) {
-            str = reader.readLine().split(":")[1];
-            data.add(str);
+            rate.add(reader.readLine());
         }
         reader.close();
+        
+        
+        int size = data.size();
+        File stat1 = new File(filePath + "stat1.txt");
+        FileOutputStream fout = new FileOutputStream(stat1);
+        int historyPeriods = 120;
+        for (int i = 0; i < size - historyPeriods; i++) {
+            statSucess(historyPeriods, source, data, rate, i, fout);
+        }
+        fout.close();
+    }
+    
+    public static void statSucess(int historyPeriods, List<String> source, List<String[]> data, List<String> rate, int startIndex, FileOutputStream fout)  throws Exception {
+        //统计
+        List<String> source2;//前historyPeriods期没有开出的组合
+        List<String> result;
+        source2 = new ArrayList<String>();
+        cloneList(source, source2);
+        int size = data.size();
+        for (int i = startIndex; i < startIndex + historyPeriods; i++) {
+            if(i >= size){
+                break;
+            }
+            source2.remove(data.get(i)[1]);
+        }
+
+        //从没有开出的组合中取频率最大的统计，也可换成最小的
+        result = new ArrayList<String>();
+        for (String str : rate) {
+            if (result.size() >= 5) {//投注数
+                break;
+            }
+            if (source2.contains(str)) {
+                result.add(str);
+            }
+        }
+        //计算前historyPeriods期之后那期会开出
+        int step = 0;
+        for (int i = startIndex + historyPeriods; i < startIndex + historyPeriods + 5000; i++) {
+            if(i >= size){
+                break;
+            }
+            step++;
+            if (result.contains(data.get(i)[1])) {
+                byte[] b = (data.get(i)[0] + ":" + data.get(i)[1] + "        " + step + "\n").toString().getBytes();
+                fout.write(b);
+                //System.out.println("sucess,投注期数:" + step);
+                break;
+            }
+        }    
+    }
+    
+    
+    public static void cloneList(List<String> source, List<String> dest){
+        for (String str : source) {
+            dest.add(str);
+        }
     }
     
     public static void main(String... args) throws Exception {
 
-        combinationClearDouble();
+        //combinationClearDouble();
+        
+        successPeriods();
     }
 }
