@@ -29,14 +29,9 @@
 		}});
     
     //对于上传附件输入框，需额外加入chang事件
-    
-    var _init = $.validator.prototype.init;
-    $.validator.prototype.init = function(){
-        _init();
-        $(this.currentForm).on('change', '[type="file"]' , function(e){
-            $(e.currentTarget).valid();
-        });
-    };
+    $(document.body).on('change', 'form [type="file"]' , function(e){
+        $(e.currentTarget).valid();
+    });
     //扩展方法
     $.fn.hideErrors = function() {
         this.each(function() {
