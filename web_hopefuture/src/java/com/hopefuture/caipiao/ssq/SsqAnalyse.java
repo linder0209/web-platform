@@ -21,7 +21,7 @@ import org.apache.jasper.tagplugins.jstl.core.ForEach;
  */
 public class SsqAnalyse {
 
-    public static final String filePath = "D:\\gitworkspace-nb\\web-platform\\web_hopefuture\\files\\";
+    public static final String filePath = "D:\\gitworkspace\\web-platform\\web_hopefuture\\files\\";
     
     /**
      * 处理数据
@@ -226,7 +226,7 @@ public class SsqAnalyse {
             str = reader.readLine().substring(6, 23);
             strArray = str.trim().split(",");
             for (int i = 0; i < 5; i++) {
-                if (Integer.parseInt(strArray[i]) + 3 == Integer.parseInt(strArray[i + 1])) {
+                if (Integer.parseInt(strArray[i]) + 1 == Integer.parseInt(strArray[i + 1])) {
                     key = strArray[i] + "," + strArray[i + 1];
                     if(hm.containsKey(key)){
                         hm.put(key, hm.get(key) + 1);
@@ -295,17 +295,13 @@ public class SsqAnalyse {
     }
      
     public static void main(String... args) throws Exception {
-//        try {
-//            sourceToDestData();
-//        } catch (Exception ex) {
-//            Logger.getLogger(SsqAnalyse.class.getName()).log(Level.SEVERE, null, ex);
-//        }
+        //sourceToDestData();
         
         //statRedData();
-        statBlueData();
+        //statBlueData();
         //statRegionData();
         //statConsecutiveData();
-        //statConsecutive2Data();
+        statConsecutive2Data();
         
         //countRepetitiveData();
         

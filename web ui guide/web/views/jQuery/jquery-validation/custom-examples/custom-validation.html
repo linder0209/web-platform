@@ -12,7 +12,7 @@
     <body>
         <div class="h-web-paragraph" style="padding:20px;">
             <form id="jquery_validation_form" method="post" style="border:1px solid #CCCCCC;width:600px;">
-                <p><label>姓名： <input type="text" name="name" required /></label></p>
+                <p><label>姓名： <input type="text" id="name" name="name" required /></label></p>
                 <p><label>FirstName： <input type="text" name="firstName" required /></label>
                     <label>LastName： <input type="text" name="lastName" id="lastName" required /></label></p>
                 <p><label>年龄：  <input type="text" name="password" required /></label></p>
@@ -30,7 +30,11 @@
                     <li><label>名称3：<input type="text" name="sameName" required/></label></li>
                 </ul>
                 <p><label>附件：  <input type="file" name="file1" required/></label></p>
-                <p><button type="submit">确定</button></p>
+                <p><label>没有name属性：  <input type="text" required/></label></p>
+                <p><label>没有显式设置type属性：  <input required/></label></p>
+                <p>防止折行的处理，需要给input包裹一个干净的标签，即input的父节点中没有其他元素（除了input）</p>
+                <p style="width:260px;border:1px solid #CCCCCC;"><label>防止折行：  <span><input type="text" id="zhehang" name="zhehang" required/></span></label></p>
+                <p><button type="submit">确定</button> <button id="clearAllError" type="button">清除表单所有验证错误信息</button> <button id="clearNameError" type="button">清除"防止折行"验证错误信息</button></p>
             </form>
         </div>
         <script type="text/javascript" src="../../../../platform/javascript/jquery/jquery.js"></script>
@@ -49,6 +53,13 @@
                         }
                     }
                 });
+            });
+            $('#clearAllError').click(function() {
+                $('#jquery_validation_form').hideErrors();
+            });
+
+            $('#clearNameError').click(function() {
+                $('#zhehang').hideErrors();
             });
         </script>
     </body>
