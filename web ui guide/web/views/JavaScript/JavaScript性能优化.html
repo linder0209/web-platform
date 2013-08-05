@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>JavaScript性能优化</title>
+    <link rel="stylesheet" href="../../platform/css/base.css" type="text/css"/>
+    <link rel="stylesheet" href="../../platform/css/platform.css" type="text/css"/>
+    <link rel="stylesheet" href="../../platform/css/theme/skyblue.css" type="text/css"/>
+    <link rel="stylesheet" href="../../platform/css/web.css" type="text/css"/>
+
+    <script type="text/javascript" src="../../platform/javascript/jquery/jquery.js"></script>
+    <script type="text/javascript">
+      $(function() {
+        $('.h-web-catalogue li a').click(function(e) {
+          e.preventDefault();
+          var paragraphNum,
+                  paragraph,
+                  offset;
+          var el = this;
+          $(this).closest('ol').find('li a').each(function(index, element) {
+            if (this === el) {
+              paragraphNum = index;
+              return false;
+            }
+          });
+          paragraph = $('.h-web-paragraph h3[paragraph]').eq(paragraphNum);
+          offset = paragraph.offset();
+          if (offset) {
+            $(window).scrollTop(offset.top);
+          }
+        });
+        //初始化内容折叠事件
+        $('.h-web-paragraph').on('click', 'h3[paragraph]', function(e) {
+          $(this).next().toggle();
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <h3 class="h-web-paragraph-title">目录</h3>
+    <ol class="h-web-catalogue">
+      <li><a paragraph href="#">字符串性能优化</a></li>
+      <li><a paragraph href="#">书写javascript注意的问题和一些建议</a></li>
+      <li><a paragraph href="#">分号、引号、逗号和大括号</a></li>
+      <li><a paragraph href="#">注释</a></li>
+
+    </ol>
+    <div class="h-web-paragraph">
+      <h3 paragraph>字符串性能优化</h3>
+      <div>
+        <h4>字符串连接</h4>
+        <p>字符串连接操作会对 Internet Explorer 6 和 7 的垃圾收集带来很大的影响。因为这种方式会有一些临时变量的创建和销毁，影响性能。
+          尽管这个问题在 Internet Explorer 8和9 里面得到解决——字符串连接在 IE8 和其它非 IE 浏览器(如 Chrome)中更有效率一点。
+          如果你的用户中有很大一部分在使用 Internet Explorer 6 或 7，你就需要非常注意你构建字符串的方式了。</p>
+        <p>下面是项目中遇到的一个例子，在文件jquery-ui-timepicker-addon.js中有一段代码是这样写的</p>
+        <pre>
+var sel = '<select class="ui-timepicker-select" data-unit="'+ unit +'" data-min="'+ min +'" data-max="'+ max +'" data-step="'+ step +'">';
+for(var i=min; i<=max; i+=step){						
+    sel += '<option value="'+ i +'"'+ (i==val? ' selected':'') +'>';
+    if(unit == 'hour' && useAmpm(tp_inst._defaults.pickerTimeFormat || tp_inst._defaults.timeFormat))
+        sel += $.datepicker.formatTime("hh TT", {hour:i}, tp_inst._defaults);
+    else if(unit == 'millisec' || i >= 10) sel += i;
+    else sel += '0'+ i.toString();
+    sel += '</option>';
+}
+sel += '</select>';
+        </pre>
+        <p>由于用到了大量的字符串连接，在ie7下性能明显降低，改用以下实现可解决该性能问题</p>
+        <pre>
+var sel = ['<select class="ui-timepicker-select" data-unit="', unit, '" data-min="', min, '" data-max="', max, '" data-step="', step, '">'];
+for(var i=min; i<=max; i+=step){	
+    sel.push('<option value="',i,'"',i==val? ' selected':'','>');
+    if(unit == 'hour' && useAmpm(tp_inst._defaults.pickerTimeFormat || tp_inst._defaults.timeFormat)){
+        sel.push($.datepicker.formatTime("hh TT", {hour:i}, tp_inst._defaults));
+    }else if(unit == 'millisec' || i >= 10){ 
+        sel.push(i);
+    }else{
+       sel.push('0', i.toString()); 
+    } 
+    sel.push('</option>');
+}
+sel.push('</select>');
+        </pre>
+        <p>当然，最新的浏览器（如火狐 Firefox，IE8+ 等等）对字符串的拼接做了优化，我们也可以这样写：</p>
+        <pre>         
+str +='str1';
+str +='str2';
+        </pre>
+        <p>新的浏览器对“+=”做了优化，性能略快于数组的“join”方法。在不久的将来更新版本浏览器可能对“+”也会做优化，
+          所以那时我们可以直接写：str += 'str1' +'str2'。但早先的浏览器中，使用Array.Join性能会较高。
+          对于一次性给一个字符串赋很长值的情况下（比如html模板），为了使代码读起来方便，我们可以采用以下方式赋值，在换行处加上 \，这样既读起来方便，又不影响性能。
+        </p>
+        <pre> 
+var tmlp = '<li><input type="text" name="topicTitle" maxlength="40" class="input_long" value="{{topicTitle}}"/>\
+	<input type="hidden" name="topicIdUpdate" class="input_long" value="{{topicIdUpdate}}"/>\
+	<a class="icn_trash_16" href="#" title=""></a></li>';
+        </pre>
+
+        <h4>构建通过辅助函数生成的字符串</h4>
+        <p>通过传递字符串构建器（可以是数组或者辅助类）到函数中构建长字符串，以避免出现存放临时结果的字符串。
+          例如，假定 buildMenuItemHtml_ 需要用文字串和变量构建一个字符串，并且会在内部使用一个字符串构建器，与其使用：
+        </p>
+        <pre>
+var strBuilder = [];
+for (var i = 0; i < menuItems.length; i++) {
+  strBuilder.push(this.buildMenuItemHtml_(menuItems[i]));
+}
+var menuHtml = strBuilder.join();
+        </pre>     
+        <p>不如用</p>
+        <pre>
+var strBuilder = [];
+for (var i = 0; i < menuItems.length; i++) {
+  this.buildMenuItem_(menuItems[i], strBuilder);
+}
+var menuHtml = strBuilder.join();
+        </pre>
+
+        <p>可以直接把字符串作为参数传入被调用的函数，而不是让函数返回字符串再赋值，减少临时字符串对象的生成。</p>
+      </div>
+      <h3 paragraph>书写javascript注意的问题和一些建议</h3>
+      <div>
+        <h4>4.1.5	谨慎地使用闭包（closure）</h4>
+        <p>闭包是 JavaScript 中一个强大而有用的特性，但是它们也有不好的地方，包括：
+          a)	它们是最常见的内存泄漏源头，b) 影响效率，创建一个闭包比创建一个没有闭包的内联函数明显要慢，比起用一个静态函数则更慢。例如： </p>
+        <pre>function setupAlertTimeout() {
+  var msg = '要显示的消息';
+  window.setTimeout(function() { alert(msg); }, 100);
+}
+        </pre>
+        <p>比下面的代码慢：</p>
+        <pre>function setupAlertTimeout() {
+  window.setTimeout(function() {
+    var msg = '要显示的消息';
+      alert(msg);
+    }, 100);
+}
+        </pre>
+        <p>更比下面的代码慢：</p>
+        <pre>function alertMsg() {
+  var msg = '要显示的消息';
+  alert(msg);
+}
+function setupAlertTimeout() {
+  window.setTimeout(alertMsg, 100);
+}
+        </pre>
+        <h4>避免使用 with，可以利用局部变量来替换</h4>
+        <p>在你的代码中避免使用 with。它对性能有非常坏的影响，因为它修改了作用域链，让查找在其它作用域的变量变得代价高昂。看如下代码</p>
+        <pre>var myObj = {};
+//code ...
+function process(){ 
+  var doc = document, 
+      images = doc.getElementsByTagName_r('img'), 
+      widget = doc.getElementsByTagName_r('input'), 
+      combination = []; 
+  for(var i = 0; i < images.length; i++){ 
+     combination.push(combine(images[i], widget[2*i])); 
+  } 
+  with (myObj.container) {
+    property1 = combination[0];
+    property2 = combination[combination.length-1];
+  }
+ }
+        </pre>
+        <p>加上“with”关键字，我们让代码更加简洁清晰了，但是这样做性能会受影响。当我们进入“with”代码块时，“combination”作用链便从原来的层 1 变到了层 2，
+          这样，效率会大打折扣。所以比较一下，还是去掉with性能高，但是这样并不是最好的方式，JavaScript 有个特点，对于 object 对象来说，其属性访问层级越深，
+          效率越低，比如这里的“myObj”已经访问到了第 3 层，我们可以这样改进一下，把myObj.container变成局部变量，如下代码</p>
+        <pre>
+var container = myObj.container;
+container.property1 = combination[0];
+ container.property2 = combination[combination.length-1];
+
+        </pre>
+        <h4></h4>
+      </div>
+    </div>
+  </body>
+</html>

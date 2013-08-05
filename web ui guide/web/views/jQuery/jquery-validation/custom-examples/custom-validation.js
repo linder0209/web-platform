@@ -140,8 +140,9 @@
         //validation info
         var rules = element$.rules(),
                 rule,
-                message;
-        for (var method in rules) {
+                message,
+                method;
+        for (method in rules) {
           rule = {method: method, parameters: rules[method]};
           try {
             var result = $.validator.methods[method].call(me, element.value.replace(/\r/g, ""), element, rule.parameters);
@@ -155,7 +156,7 @@
               if (typeof message == "function") {
                 message = message.call(me, rule.parameters, element);
               } else if (theregex.test(message)) {
-                message = jQuery.format(message.replace(theregex, '{$1}'), rule.parameters);
+                message = $.format(message.replace(theregex, '{$1}'), rule.parameters);
               }
               break;
             }
