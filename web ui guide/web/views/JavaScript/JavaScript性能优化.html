@@ -41,7 +41,7 @@
     <ol class="h-web-catalogue">
       <li><a paragraph href="#">字符串性能优化</a></li>
       <li><a paragraph href="#">书写javascript注意的问题和一些建议</a></li>
-      <li><a paragraph href="#">分号、引号、逗号和大括号</a></li>
+      <li><a paragraph href="#">性能优化的一些小技巧</a></li>
       <li><a paragraph href="#">注释</a></li>
 
     </ol>
@@ -148,32 +148,165 @@ function setupAlertTimeout() {
         <h4>避免使用 with，可以利用局部变量来替换</h4>
         <p>在你的代码中避免使用 with。它对性能有非常坏的影响，因为它修改了作用域链，让查找在其它作用域的变量变得代价高昂。看如下代码</p>
         <pre>var myObj = {};
-//code ...
+myObj.container = {
+  start: '',
+  end: ''
+};
 function process(){ 
   var doc = document, 
-      images = doc.getElementsByTagName_r('img'), 
-      widget = doc.getElementsByTagName_r('input'), 
+      images = doc.getElementsByTagName('img'), 
+      widget = doc.getElementsByTagName('input'),
       combination = []; 
   for(var i = 0; i < images.length; i++){ 
      combination.push(combine(images[i], widget[2*i])); 
   } 
   with (myObj.container) {
-    property1 = combination[0];
-    property2 = combination[combination.length-1];
+    start = combination[0];
+    end = combination[combination.length-1];
   }
- }
+}
+function combine(){}
         </pre>
         <p>加上“with”关键字，我们让代码更加简洁清晰了，但是这样做性能会受影响。当我们进入“with”代码块时，“combination”作用链便从原来的层 1 变到了层 2，
           这样，效率会大打折扣。所以比较一下，还是去掉with性能高，但是这样并不是最好的方式，JavaScript 有个特点，对于 object 对象来说，其属性访问层级越深，
           效率越低，比如这里的“myObj”已经访问到了第 3 层，我们可以这样改进一下，把myObj.container变成局部变量，如下代码</p>
         <pre>
 var container = myObj.container;
-container.property1 = combination[0];
- container.property2 = combination[combination.length-1];
-
+container.start = combination[0];
+container.end = combination[combination.length-1];
         </pre>
-        <h4></h4>
+        <h4>避免使用 eval</h4>
+        <p>比较下述代码</p>
+        <pre>
+function demo(){
+    console.time('demo');    
+    for (var i = 0; i < 10000; i++) {
+        var reference = {}, props = 'p1';
+        eval('reference.' + props + '=5');
+    }
+    console.timeEnd('demo');
+}
+demo();//在火狐下执行的时间大概400多ms
+        </pre>
+        <pre>
+function demo(){
+    console.time('demo');    
+    for (var i = 0; i < 10000; i++) {
+        var reference = {}, props = 'p1';
+        reference[props] = 5;
+    }
+    console.timeEnd('demo');
+}
+demo();//在火狐下执行的时间只需2ms
+        </pre>
+        <p>从以上运行结果来分析，有“eval”的代码比没有“eval”的代码要慢上 200 倍以上。
+          主要原因是：JavaScript 代码在执行前会进行类似“预编译”的操作：首先会创建一个当前执行环境下的活动对象，并将那些用 var 声明的变量设置为活动对象的属性，
+          但是此时这些变量的赋值都是 undefined，并将那些以 function 定义的函数也添加为活动对象的属性，而且它们的值正是函数的定义。但是，如果你使用了“eval”，
+          则“eval”中的代码（实际上为字符串）无法预先识别其上下文，无法被提前解析和优化，即无法进行预编译的操作。所以，其性能也会大幅度降低。
+        </p>
+        <p>另外，我们也不要用Function构造函数来定义函数，看以下代码</p>
+        <pre>
+var func1 = new Function('return arguments[0] + arguments[1]');
+func1(10, 20); 
+var func2 = function(){ return arguments[0] + arguments[1] };
+func2(10, 20);
+        </pre>
+        <p>这里类似之前提到的“eval”方法，这里“func1”的效率会比“func2”的效率差很多</p>
+        <h4>推荐使用局部变量</h4>
+        <p>函数的作用域链（scope chain），JavaScript 代码解释执行，在进入函数内部时，它会预先分析当前的变量，并将这些变量归入不同的层级（level）。
+          一般情况下：局部变量放入层级 1（浅），全局变量放入层级 2（深）。如果进入“with”或“try – catch”代码块，
+          则会增加新的层级，即将“with”或“catch”里的变量放入最浅层（层 1），并将之前的层级依次加深。</p>
+        <p>我们以上面“避免使用 with”中的例子来分析，如果我们这样书写代码</p>
+        <pre>var myObj = {};
+myObj.container = {
+  start: '',
+  end: ''
+};
+function process(){ 
+  var images = document.getElementsByTagName('img'), 
+      widget = document.getElementsByTagName('input'),
+      combination = []; 
+  for(var i = 0; i < images.length; i++){ 
+     combination.push(combine(images[i], widget[2*i])); 
+  } 
+  myObj.container.start = combination[0];
+  myObj.container.end = combination[combination.length-1];
+}
+function combine(){}
+        
+// test
+function demo(){
+    console.time('demo');    
+    for (var i = 0; i < 10000; i++) {
+        process();
+    }
+    console.timeEnd('demo');
+}
+demo();//在firefox下大概70ms
+        </pre>
+
+        <p>这里我们可以看到，“images”，“widget”，“combination”属于局部变量，在层 1。“document”，“myObj”属于全局变量，在层 2。
+          变量所在的层越浅，访问（读取或修改）速度越快，层越深，访问速度越慢。所以这里对“images”，“widget”，“combination”的访问速度比“document”，“myObj”要快一些。
+          所以推荐尽量使用局部变量，我们看一下修改后的代码：
+        </p>
+
+        <pre>
+var myObj = {};
+myObj.container = {
+  start: '',
+  end: ''
+};
+function process(){ 
+  var doc = document,
+      images = doc.getElementsByTagName('img'), 
+      widget = doc.getElementsByTagName('input'),
+      container = myObj.container,
+      combination = []; 
+  for(var i = 0; i < images.length; i++){ 
+     combination.push(combine(images[i], widget[2*i])); 
+  } 
+  container.start = combination[0];
+  container.end = combination[combination.length-1];
+}
+function combine(){}
+        
+// test
+function demo(){
+    console.time('demo');    
+    for (var i = 0; i < 10000; i++) {
+        process();
+    }
+    console.timeEnd('demo');
+}
+demo();//在firefox下大概50ms
+        </pre>
+        <p>
+          我们用局部变量“doc”取代全局变量“document”，用“container”取代“myObj.container”（这样可以缩小对象访问层级）。
+          以上修改明显的改进了性能，尤其是对于大量使用全局变量的函数，效果会更明显。另外使用局部变量的一个好处就是利用压缩代码插件可以把js代码压缩的更小，
+          比如document是不被压缩的，如果改为doc局部变量时，doc就会被压缩。
+        </p>
+
+        <h4>循环的优化</h4>
+        <p>循环是很常用的一个控制结构，大部分东西要依靠它来完成，在JavaScript中，我们可以使用for(;;),while(),for(in)三种循环，事实上，这三种循环中for(in)的效率极差，因为他需要查询散列键，只要可以就应该尽量少用。for(;;)和while循环的性能应该说基本等价。          </p>
+        <p>而事实上，如何使用这两个循环，则有很大讲究，得出的结论是：如果是循环变量递增或递减，不要单独对循环变量赋值，应该在它最后一次读取的时候使用嵌套的++或--操作符。如果要与数组的长度作比较，应该事先把数组的length属性放入一个局部变量中，减少查询次数。 </p>
+        <p>举例，假设arr是一个数组，最佳的遍历元素方式为： </p>
+        <pre>for(var i=0, len = arr.length;i &lt; len;i++){…} </pre>
+
+        <p>或者，如果无所谓顺序的话，也可以这样：</p>
+        <pre>for(var i=arr.length;i>0;i–){…}</pre>
       </div>
+      <h3 paragraph>性能优化的一些小技巧</h3>
+      <div>
+        <ol>
+          <li>运算符操作时，尽量使用+＝，－＝、*＝、\=等运算符号，而不是直接进行赋值运算</li>
+          <li>当需要将数字转换成字符时，采用如下方式："" + 1。从性能上来看，将数字转换成字符时，有如下公式：("" +1) > String() > .toString() > new String()。
+            String()属于内部函数，所以速度很快。而.toString()要查询原型中的函数，所以速度逊色一些，new String()需要重新创建一个字符串对象，速度最慢</li>
+          <li>当需要将浮点数转换成整型时，应该使用Math.floor()或者Math.round()。而不是使用parseInt(),该方法用于将字符串转换成数字。
+            而且Math是内部对象，所以Math.floor()其实并没有多少查询方法和调用时间，速度是最快的</li>
+          <li>尽量使用JSON格式来创建对象或数组，而不是new Object()或new Array()方法。因为前者是直接变量，引用即可，而后者需要调用构造器，因而前者的性能更好。</li>
+        </ol>
+      </div>
+      
     </div>
   </body>
 </html>
