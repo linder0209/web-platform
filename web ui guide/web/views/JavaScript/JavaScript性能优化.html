@@ -575,7 +575,54 @@ function y(){
 }</pre>
         <p>第二段代码读取变量a的时候，不用前往上一层作用域，所以要比第一段代码<a href="http://jsperf.com/global/2" target="_blank">快五六倍</a>。</p>
         <p>同理，在调用对象方法的时候，closure模式要比prototype模式<a href="http://jsperf.com/prototype-vs-closures/20" target="_blank">更快</a>。</p>
+        <p>prototype模式：</p>
+        
+                <pre>
+var X = function(name){ this.name = name; }
+X.prototype.get_name = function() { return this.name; };</pre>
+
+<p>closure模式：</p>
+        <pre>
+var Y = function(name) {
+var y = { name: name };
+   return { 'get_name': function() { return y.name; } };
+};</pre>
+        <p>同样是get_name()方法，closure模式<a target="_blank" href="http://jsperf.com/prototype-vs-closures/20">更快</a>。</p>
+        
+        <h4>使用Pub/Sub模式管理事件</h4>
       </div>
-    </div>
+  <p>当发生某个事件后，如果要连续执行多个操作，最好不要写成下面这样：</p>
+  <pre>
+function doSomthing{
+    doSomethingElse();
+    doOneMoreThing();
+}</pre>
+  
+  <p>而要改用事件触发的形式：</p>
+  <pre>
+function doSomething{
+  　$.trigger("DO_SOMETHING_DONE");
+}
+　　$(document).on("DO_SOMETHING_DONE", function(){
+　　　　doSomethingElse(); }
+　　);</pre>
+  <p>还可以考虑使用<a target="_blank" href="http://www.ruanyifeng.com/blog/2011/08/a_detailed_explanation_of_jquery_deferred_object.html">deferred对象</a>。</p>  
+  <pre>
+function doSomething(){
+　　　　var dfd = new $.Deferred();
+
+　　　　//Do something async, then...
+　　　　//dfd.resolve();
+
+　　　　return dfd.promise();
+
+　　}
+
+　　function doSomethingElse(){
+
+　　　　$.when(doSomething()).then(//The next thing);
+
+　　}</pre>
+  </div>
   </body>
 </html>
