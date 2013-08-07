@@ -43,7 +43,7 @@
       <li><a paragraph href="#">书写javascript注意的问题和一些建议</a></li>
       <li><a paragraph href="#">Repaint 和 Reflow的优化</a></li>
       <li><a paragraph href="#">性能优化的一些小技巧</a></li>
-
+      <li><a paragraph href="#">jQuery最佳实践</a></li>
 
     </ol>
     <div class="h-web-paragraph">
@@ -312,7 +312,7 @@ demo();//在firefox下大概50ms
           <li>一些改变页面元素大小，形状和位置操作的触发 </li>
         </ul>
         <p class="h-web-font-red">优化方案</p>
-        <p>  1、减少 Reflow          </p>
+        <h4> 减少 Reflow          </h4>
         <p>通过 Reflow 和 Repaint 的介绍可知，每次 Reflow 比其 Repaint 会带来更多的性能消耗，所以我们应该尽量减少 Reflow 的发生，或者将其转化为只触发 Repaint 操作的代码。 
           看下面的代码： </p>
         <pre> var pDiv = document.createElement('div'); 
@@ -365,7 +365,8 @@ function demo(){
 demo();//在firefox下大概100ms左右
         </pre>
         <p>测试结果可以看出，减少reflow的操作，性能明显的提高了。</p>
-        <p>2、特殊测量属性和方法对Reflow的优化</p>
+        
+        <h4>特殊测量属性和方法对Reflow的影响</h4>
         <p>DOM 元素里面有一些特殊的测量属性的访问和方法的调用，也会触发 Reflow，比较典型的就是&ldquo;offsetWidth&rdquo;属性。测量属性和方法大致有这些： </p>
         <ul>
           <li>offsetLeft</li>
@@ -385,7 +386,8 @@ result.children[2].style.width  = pOffsetWidth;
         </pre>
         <p>这里我们可以用临时变量将“offsetWidth”的值缓存起来，这样就不用每次访问“offsetWidth”属性。这种方式在循环里面非常适用，可以极大地提高性能。</p>
         <p>例子待补充</p>
-        <p>3、样式相关性能优化</p>
+        
+        <h4>样式相关性能优化</h4>
         <p>我们肯定经常见到如下的代码：</p>
         <pre>var sElement = document.getElementById('pos_element'); 
 sElement.style.border = '1px solid red';
@@ -423,17 +425,157 @@ sElement.style.cssText += newStyle;
           <li>监听动态元素，Dom 事件默认是向上冒泡的，发生在子节点中的事件，可以由父节点来处理。event 的 target/srcElement 仍是产生事件的最深层子节点。这样，对于内容动态增加并且子节点都需要相同的事件处理函数的情况，可以把事件注册上提到父节点上，这样就不需要为每个子节点注册事件监听了。这样可以提高性能，同时也可避免产生无法回收内存的情况。</li>
           <li>把try-catch语句放在循环外面，不要放在循环里面，因为异常是很少发生的，放在外面避免每次都要执行它们</li>
           <li>对于简单的任务，最好使用基本操作方式来实现，而不是使用函数调用实现。例如val1 < val2 ? val1 : val2;执行速度快于Math.min(val1, val2);类似的，myArr.push(newEle);慢于myArr[myArr.length] = newEle;</li>
-          <li></li>
-          <li></li>
-          <li></li>
-          <li></li>
-
-
-
-
+          <li>还可以在各种JavaScript文件中添加下面的声明： 
+              <pre>
+'use strict';
+              </pre>
+              添加了这段代码，JavaScript将会运行得更快。
+          </li>
         </ol>
       </div>
-
+      
+      <h3 paragraph>jQuery最佳实践</h3>
+      <div>
+          <p>本文摘自<a href="http://www.ruanyifeng.com/blog/2011/08/jquery_best_practices.html">http://www.ruanyifeng.com/blog/2011/08/jquery_best_practices.html</a></p>
+          <p>部分内容做了些修改，<span class="h-web-font-red">本人觉得在用jQuery的时候，不一定刻意的为了追求性能而不断的修改，重构代码。这样没必要，只是书写的时候注意即可，再有就是在比较耗时的地方优化一下，比如大量循环等。</span></p>
+          <h4>使用最新版本的jQuery</h4>
+          <p>jQuery的版本更新很快，你应该总是使用最新的版本。因为新版本会改进性能，还有很多新功能。</p>
+          <h4>使用简单的性能高的选择器</h4>
+          <p>在jQuery中，你可以用多种选择器，选择同一个网页元素。每种选择器的性能是不一样的，你应该了解它们的性能差异。</p>
+          <h5>最快的选择器：id选择器和元素标签选择器</h5>
+          <p>举例来说，下面的语句性能最佳：</p>
+          <pre>$('#id')
+$('form')
+$('input')</pre>
+          <p>遇到这些选择器的时候，jQuery内部会自动调用浏览器的原生方法（比如getElementById()），所以它们的执行速度快。</p>
+          <h5>较慢的选择器：class选择器</h5>
+          <p>$('.className')的性能，取决于不同的浏览器。
+Firefox、Safari、Chrome、Opera浏览器，都有原生方法getElementByClassName()，所以速度并不慢。但是，IE5-IE8都没有部署这个方法，所以这个选择器在IE中会相当慢。</p>
+          <h5>最慢的选择器：伪类选择器和属性选择器</h5>
+          <p>看以下代码</p>
+          <pre>
+$(':hidden')
+$('[attribute=value]')
+          </pre>
+          <p>这两种语句是最慢的，因为浏览器没有针对它们的原生方法。但是，一些浏览器的新版本，增加了querySelector()和querySelectorAll()方法，因此会使这类选择器的性能有大幅提高。</p>
+          
+          <h4>理解子元素和父元素的关系，使用最佳的选择</h4>
+          <p>下面六个选择器，都是从父元素中选择子元素。你知道哪个速度最快，哪个速度最慢吗？</p>
+          <pre>$('.child', $parent)
+$parent.find('.child')
+$parent.children('.child')
+$('#parent > .child')
+$('#parent .child')
+$('.child', $('#parent'))</pre>
+          <p>我们一个个来分析</p>
+          <h5> $('.child', $parent)</h5>
+          <p>这条语句的意思是，给定一个DOM对象，然后从中选择一个子元素。jQuery会自动把这条语句转成$.parent.find('child')，这会导致一定的性能损失。它比最快的形式慢了5%-10%。</p>
+          <h5>$parent.find('.child')</h5>
+          <p>这条是最快的语句。.find()方法会调用浏览器的原生方法（getElementById，getElementByName，getElementByTagName等等），所以速度较快。</p>
+          <h5> $parent.children('.child')</h5>
+          <p>这条语句在jQuery内部，会使用$.sibling()和javascript的nextSibling()方法，一个个遍历节点。它比最快的形式大约慢50%。</p>
+          <h5>$('#parent &gt; .child')</h5>
+          <p>jQuery内部使用Sizzle引擎，处理各种选择器。Sizzle引擎的选择顺序是从右到左，所以这条语句是先选.child，然后再一个个过滤出父元素#parent，这导致它比最快的形式大约慢70%。</p>
+          <h5>$('#parent .child')</h5>
+          <p>这条语句与上一条是同样的情况。但是，上一条只选择直接的子元素，这一条可以于选择多级子元素，所以它的速度更慢，大概比最快的形式慢了77%。</p>
+          <h5>$('.child', $('#parent'))</h5>
+          <p>jQuery内部会将这条语句转成$('#parent').find('.child')，比最快的形式慢了23%。</p>
+          <p>所以，最佳选择是$parent.find('.child')。而且，由于$parent往往在前面的操作已经生成，jQuery会进行缓存，所以进一步加快了执行速度。</p>
+          <p>具体的例子和比较结果，请看<a href="http://jsperf.com/jquery-selectors-context/2" target="_blank">这里</a>。</p>
+          
+          <h4>不要过度依赖jQuery而使性能降低</h4>
+          <p>jQuery速度再快，也无法与原生的javascript方法相比。所以有原生方法可以使用的场合，尽量避免使用jQuery。
+以最简单的选择器为例，document.getElementById("foo")要比$("#foo")快10多倍。
+再来看一个例子，为a元素绑定一个处理点击事件的函数：</p>
+          <pre>
+$('a').click(function(){
+    alert($(this).attr('id'));
+});</pre>
+        <p>这段代码的意思是，点击a元素后，弹出该元素的id属性。为了获取这个属性，必须连续两次调用jQuery，第一次是$(this)，第二次是attr('id')。</p>
+          <p>事实上，这种处理完全不必要。更正确的写法是，直接采用javascript原生方法，调用this.id</p>
+          <pre>
+$('a').click(function(){
+    alert(this.id);
+});</pre>
+          <p>根据<a href="http://jsperf.com/el-attr-id-vs-el-id/2" target="_blank">测试</a>，this.id的速度比$(this).attr('id')快了10多倍。</p>
+          <h4>利用缓存，也称局部变量来处理jQuery对象</h4>
+          <p>选中某一个网页元素，是开销很大的步骤。所以，使用选择器的次数应该越少越好，并且尽可能缓存选中的结果，便于以后反复使用。
+比如，下面这样的写法就是糟糕的写法：</p>
+          <pre>
+jQuery('#top').find('p.classA');
+jQuery('#top').find('p.classB');
+          </pre>
+          <p>更好的写法是：</p>
+        <pre>var cached = jQuery('#top');
+cached.find('p.classA');
+cached.find('p.classB');</pre>
+        <p>根据<a href="http://jsperf.com/ns-jq-cached" target="_blank">测试</a>，缓存比不缓存，快了2-3倍。</p>
+        
+        <h4>使用链式写法</h4>
+        <p>jQuery的一大特点，就是允许使用链式写法。</p>
+        <pre>$('div').find('h3').eq(2).html('Hello');
+</pre>
+        <p>采用链式写法时，jQuery自动缓存每一步的结果，因此比非链式写法要快。根据<a href="http://jsperf.com/jquery-chaining" target="_blank">测试</a>，链式写法比（不使用缓存的）非链式写法，大约快了25%。</p>
+        <h4>事件的委托处理（Event Delegation）</h4>
+        <p>javascript的事件模型，采用"冒泡"模式，也就是说，子元素的事件会逐级向上"冒泡"，成为父元素的事件。</p>
+        <p>利用这一点，可以大大简化事件的绑定。比如，有一个表格（table元素，假设id为table1），里面有100个格子（td元素），现在要求在每个格子上面绑定一个点击事件（click），请问是否需要将下面的命令执行100次？</p>
+        <pre>$("td").on("click", function(){
+    $(this).toggleClass("click");
+});</pre>
+        <p>回答是不需要，我们只要把这个事件绑定在table元素上面就可以了，因为td元素发生点击事件之后，这个事件会"冒泡"到父元素table上面，从而被监听到。</p>
+        <p>因此，这个事件只需要在父元素绑定1次即可，而不需要在子元素上绑定100次，从而大大提高性能。这就叫事件的"委托处理"，也就是子元素"委托"父元素处理这个事件。</p>
+        <pre>
+$("#table1").on("click", "td", function(){
+    $(this).toggleClass("click");
+});
+        </pre>
+        <p>当然也可以委托到document上，可以用off方法取消事件的绑定。</p>
+        
+        <h4>少改动DOM结构</h4>
+        <p>（1）改动DOM结构开销很大，因此不要频繁使用.append()、.insertBefore()和.insetAfter()这样的方法。</p>
+        <p>如果要插入多个元素，就先把它们合并，然后再一次性插入。根据<a href="http://jsperf.com/string-concat-single-append-vs-multiple-append" target="_blank">测试</a>，合并插入比不合并插入，快了将近10倍。</p>
+        <p>（2）如果你要对一个DOM元素进行大量处理，应该先用.detach()方法，把这个元素从DOM中取出来，处理完毕以后，再重新插回文档。根据<a href="http://jsperf.com/to-detach-or-not-to-detach" target="_blank">测试</a>，使用.detach()方法比不使用时，快了60%。</p>
+        <p>（3）如果你要在DOM元素上储存数据，不要写成下面这样：</p>
+        <pre>
+var elem = $('#elem');
+elem.data(key,value);</pre>
+        <p>而要写成这样：</p>
+        <pre>
+var elem = $('#elem');
+$.data(elem[0],key,value);  </pre>
+        <p>根据<a href="http://jsperf.com/jquery-data-vs-jqueryselection-data/11" target="_blank">测试</a>，后一种写法要比前一种写法，快了将近10倍。因为elem.data()方法是定义在jQuery函数的prototype对象上面的，而$.data()方法是定义jQuery函数上面的，调用的时候不从复杂的jQuery对象上调用，所以速度快得多。（此处可以参阅下面第10点。）</p>
+        <p>（4）插入html代码的时候，浏览器原生的innterHTML属性比jQuery对象的html()<a href="http://jsperf.com/jquery-dom-manipulation/4" target="_blank">更快</a>。</p>
+        <h4>正确处理循环</h4>
+        <p>循环总是一种比较耗时的操作，如果可以使用复杂的选择器直接选中元素，就不要使用循环，去一个个辨认元素。</p>
+        <p>javascript原生循环方法for和while，要比jQuery的.each()方法<a href="http://jsperf.com/jquery-each-vs-for-loop/24" target="_blank">快</a>，应该优先使用原生方法。</p>
+        <h4>尽量少生成jQuery对象</h4>
+        <p>每当你使用一次选择器（比如$('#id')），就会生成一个jQuery对象。jQuery对象是一个很庞大的对象，带有很多属性和方法，会占用不少资源。所以，尽量少生成jQuery对象。</p>
+        <p>举例来说，许多jQuery方法都有两个版本，一个是供<strong>jQuery对象</strong>使用的版本，另一个是供<strong>jQuery函数</strong>使用的版本。下面两个例子，都是取出一个元素的文本，使用的都是text()方法。</p>
+        <p>你既可以使用针对jQuery对象的版本：</p>
+        
+        <pre>var $text = $("#text");
+var $ts = $text.text();</pre>
+        <p>也可以使用针对jQuery函数的版本：</p>
+        <pre>var $text = $("#text");
+var $ts = $.text($text);</pre>
+        <p>由于后一种针对jQuery函数的版本不通过jQuery对象操作，所以相对开销较小，速度<a href="http://jsperf.com/jquery-text-vs-html/5" target="_blank">比较快</a>。</p>
+        <h4>选择作用域链最短的方法</h4>
+        <p>严格地说，这一条原则对所有Javascript编程都适用，而不仅仅针对jQuery。</p>
+        <p>我们知道，Javascript的变量采用链式作用域。读取变量的时候，先在当前作用域寻找该变量，如果找不到，就前往上一层的作用域寻找该变量。这样的设计，使得读取局部变量比读取全局变量快得多。</p>
+        <p>请看下面两段代码，第一段代码是读取全局变量：</p>
+        <pre>var a = 0;
+function x(){
+    a += 1;
+}</pre>
+        <p>第二段代码是读取局部变量：</p>
+        <pre>
+function y(){
+    var a = 0;
+    a += 1;
+}</pre>
+        <p>第二段代码读取变量a的时候，不用前往上一层作用域，所以要比第一段代码<a href="http://jsperf.com/global/2" target="_blank">快五六倍</a>。</p>
+        <p>同理，在调用对象方法的时候，closure模式要比prototype模式<a href="http://jsperf.com/prototype-vs-closures/20" target="_blank">更快</a>。</p>
+      </div>
     </div>
   </body>
 </html>

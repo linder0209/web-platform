@@ -126,7 +126,7 @@
 .h-web-paragraph ol{
     list-style-type: decimal; 
     margin-left: 40px;
-    color: #009EC3;
+    /*color: #009EC3;*/
     font-size: 14px;
 }
 .h-web-paragraph ol li{
