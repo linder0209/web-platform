@@ -104,9 +104,10 @@
 .h-body-sidebar {
     float: left;
     width: 250px;
-    -moz-box-shadow: 0 0 5px rgba(0, 0, 0, .15);
+    border: 1px solid #CCCCCC;
+/*    -moz-box-shadow: 0 0 5px rgba(0, 0, 0, .15);
     -webkit-box-shadow: 0 0 5px rgba(0, 0, 0, .15);
-    box-shadow: 0 0 5px rgba(0, 0, 0, .15);
+    box-shadow: 0 0 5px rgba(0, 0, 0, .15);*/
 }
 
 .h-menu-header {
@@ -194,6 +195,17 @@
     background-color: #FFFFFF;
     height: 5px;
 }
+.h-body-extended{
+    width: 8px;
+    height: 600px;
+    float: left;
+    position: relative;
+}
+.h-body-extended span{
+    position: absolute;
+    border: 1px solid #CCCCCC;
+    background: url("./images/web_ui_sprites.png") no-repeat -23px -3px;
+}
 
 .h-body-container {
     padding-left: 250px;
@@ -202,7 +214,7 @@
 .h-body-panel {
     background-color: #EFEFEF;
     border: 1px solid #CCC;
-    border-radius: 5px 5px 5px 5px;
+    /*border-radius: 5px 5px 5px 5px;*/
     padding: 12px;
     margin: 5px 5px 5px 8px;
 }
@@ -291,16 +303,20 @@
     font-weight: bold;
 }
 .h-upward{
-    background-color: #EEEEEE;
-    border: 1px solid #D5D5D5;
+    background-color: #333333;
+    border: 1px solid black;
     padding: 5px 8px;
     border-radius: 5px 5px 5px 5px;
-    bottom: 10px;
+    top: 60%;
     position: fixed;
-    right: 10px;
+    left: 60%;
     cursor: pointer;
     z-index: 1;
     display: none;
+    filter: alpha(opacity=50);
+    -khtml-opacity: 0.5;
+    -moz-opacity: 0.5;
+    opacity: 0.5;      
 }
 .h-upward i{
     background: url("./images/web_ui_sprites.png") no-repeat -91px 0 ;

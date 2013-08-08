@@ -18,7 +18,7 @@
     var pub = {
         context: 'views/',
         currentModules: '', //记录当前所有模块上下文
-        
+        currentScrollTop: 0,//记录当前页面scrollTop的值
         initWebUI: function(xmlUrl) {
             this.initElement();
             this.initEvent();
@@ -89,7 +89,7 @@
              */
             var upward = $('#upward');
             if(upward.length == 0){
-                upward = $('<div class="h-upward" id="upward"><i title="回到顶部"></i></div>').appendTo(document.body);
+                upward = $('<div class="h-upward" id="upward" title="回到顶部"><i></i></div>').appendTo(document.body);
             }
             upward.click(function(e) {
                 document.documentElement.scrollTop = 0;
@@ -123,9 +123,10 @@
         //实现当window滚动时，顶端的菜单栏位置不变，始终置于页面顶部
         initScroll: function() {
             var headerHeight = $('#header').outerHeight(true);
-            $(window).scroll(function() {
+            var me = this;
+            $(window).scroll(function(e) {
                 var scrollTop = $(this).scrollTop();
-                $('#upward')[scrollTop > 0 ? 'show' : 'hide']();
+                $('#upward')[me.currentScrollTop > scrollTop && scrollTop > 0 ? 'show' : 'hide']();
                 if (scrollTop > headerHeight) {
                     var match = /(msie) ([\w.]+)/.exec(window.navigator.userAgent.toLowerCase()) || [];
                     if (match[1] == 'msie' && match[2] === '6.0') {
@@ -139,12 +140,19 @@
                     } else {
                         $('#p2Menu').css({
                             position: 'fixed',
-                            top: '10px'
+                            top: '5px'
                         });
                     }
                 } else {
                     $('#p2Menu').css('position', 'static');
                 }
+                me.currentScrollTop = scrollTop;
+                if(me.hideUpward){
+                    clearTimeout(me.hideUpward);
+                }
+                me.hideUpward = setTimeout(function(){
+                    $('#upward').hide();
+                },5000);
             });
         },
                 
