@@ -7,6 +7,28 @@
         <link rel="stylesheet" href="../../platform/css/platform.css" type="text/css"/>
         <link rel="stylesheet" href="../../platform/css/theme/skyblue.css" type="text/css"/>
         <link rel="stylesheet" href="../../platform/css/web.css" type="text/css"/>
+        
+        <link type="text/css" rel="stylesheet" href="../../platform/javascript/syntaxhighlighter/styles/shCoreDefault.css"/>
+        
+        <script type="text/javascript" src="../../platform/javascript/jquery/jquery.js"></script>
+        
+        <script type="text/javascript" src="../../platform/javascript/syntaxhighlighter/scripts/shCore.js"></script>
+        <script type="text/javascript" src="../../platform/javascript/syntaxhighlighter/scripts/shBrushXml.js"></script>
+        <script type="text/javascript" src="../../platform/javascript/syntaxhighlighter/scripts/shBrushJScript.js"></script>
+        
+        <script type="text/javascript">
+            $(function() {
+                
+                //SyntaxHighlighter
+                $('pre').replaceWith(function(){
+                    var html = '<pre type="syntaxhighlighter" class="brush: js; html-script: true; quick-code: false; toolbar : false" >';
+                    html += $(this).html();
+                    html += '</pre>';
+                    return html;
+                });
+                SyntaxHighlighter.highlight();
+            });
+        </script>
     </head>
     <body>
         <div class="h-web-paragraph">
@@ -260,7 +282,7 @@ div {
                         这一小段就垂直集中了.
                     </div>
                     <p>设置为table-cell后，原来的块级元素的特性就不存在了，所以要分情况，看需要运用table-cell。关于table相关选项值的应用，网上有一篇文章介绍的不错，
-                    主要介绍了table的垂直居中，等高，水平级联，匿名创建等特性，感兴趣的话请点击 <a href="http://www.zhangxinxu.com/wordpress/?p=1187">这里</a></p>
+                        主要介绍了table的垂直居中，等高，水平级联，匿名创建等特性，感兴趣的话请点击 <a href="http://www.zhangxinxu.com/wordpress/?p=1187">这里</a></p>
                 </li>
 
                 <li>
@@ -288,16 +310,59 @@ div {
                         </tr>
                     </table>
                 </li>
-                
+
                 <li>run-in
-                   <p>此元素会根据上下文作为块级元素或内联元素显示。看下面的例子：</p>
-                   <div>
-                   		<span style="display:run-in">设置为run-in</span>
-                        <span>金菌克精金框架</span>
-                        http://www.swordair.com/blog/2012/02/800/
-                        
-                        http://www.zhangxinxu.com/wordpress/2012/03/tip-css-multiline-display/
-                   </div>
+                    <p>此元素会根据上下文作为块级元素或内联元素显示。该属性各大浏览器兼容性不是很好，ie6，ie7，firefox不支持，其他支持的都很好</p>
+                    <p><a href="http://www.w3.org/TR/css3-box/#run-in-boxes">官方的解释</a>是这样的</p>
+                    <pre> run-in box behaves as follows:
+    1.If the run-in box contains a block box, the run-in box becomes a block box.
+    2.If a sibling block box (that does not float and is not absolutely positioned) follows the run-in box, 
+      the run-in box becomes the first inline box of the block box. 
+      A run-in cannot run in to a block that already starts with a run-in or that itself is a run-in.
+    3.Otherwise, the run-in box becomes a block box. </pre>
+                    <p>翻译成中文就是</p>
+                    <pre>
+    1.如果run-in box 包含了一个 block box，那么这个run-in就是一个 block box，这个规则好像有问题，即使是包含的是行内元素，设置run-in后也会是 block box
+    2.如果一个节点设置了run-in box，并且紧挨着另一个兄弟节点（当然该节点没有设置float和绝对定位）是block box，
+      那么run-in box就会成为此 block box 里的 first inline box。
+      一个run-in box不能进入已经设置为run-in的block box，也不能进入本身
+    3.其他情况下，run-in被当成 block box
+                    </pre>
+                    
+                    <p>看下面的例子：(需要在支持run-in浏览器运行)</p>
+                    <p>第一条规则</p>
+                    <div>
+                        <span style="padding: 10px;border: 1px solid #CCCCCC;display: run-in;">
+                            <span>把行内元素设为run-in，并且包含了一个 block box，</span> <span>the inline box 就成了 block box</span>
+                            <div style="border:1px solid #CCCCCC;">a block box</div>
+                        </span>
+                    </div>
+                    <div>
+                        <span style="margin-top: 10px; padding: 10px;border: 1px solid #CCCCCC;display: run-in;">
+                            把行内元素设为run-in，并且包含了一个 inline box，the inline box 就成了 block box
+                            <span style="margin: 10px;border:1px solid #CCCCCC;">a inline box</span>
+                        </span>
+                    </div>
+                    <p>第二条规则</p>
+                    <div style="padding: 10px;border: 1px solid #CCCCCC;">
+                        <span style="display:run-in">行内元素设置为run-in。就会进入紧挨着他的block box。</span>
+                        <div style="border: 1px solid #00BEEE;">&nbsp;</div>
+                    </div>
+                    <div style="margin-top: 10px; padding: 10px;border: 1px solid #CCCCCC;">
+                        <span style="display:run-in;">行内元素设置为run-in，但紧挨着block box 也设置了run-in，所以不能进入</span>
+                        <div style="display:run-in;border: 1px solid #00BEEE;"> 紧挨一个block元素设置了run-in</div>
+                    </div>
+                    
+                    <p>可见 display:run-in; 会根据上下文环境变换表现形式：如果后面是一个块，那么就并入其中成为行内头。如果后面是行，则继续独立保持成块。</p>
+                    <p>利用run-in一个典型的应用就是，h1 - h6无法包含在 p 里，我们既要达到语义又要达到这样的视觉效果的话，唯有使用 display:run-in;</p>
+                    <div style="border: 1px solid #CCCCCC;">
+                        <h6 style="display: run-in;">A run-in heading.</h6>
+                        <p>And a paragraph of text that follows it.</p>
+                    </div>
+                    <p>参考资料</p>
+                    <p><a href="http://www.swordair.com/blog/2012/02/800/">http://www.swordair.com/blog/2012/02/800/</a></p>
+                    <p><a href="http://www.zhangxinxu.com/wordpress/2012/03/tip-css-multiline-display/">http://www.zhangxinxu.com/wordpress/2012/03/tip-css-multiline-display/</a></p>
+                    <p>对于浏览器的兼容性可以参见 <a href="http://www.w3help.org/zh-cn/causes/RM8001">这里</a></p>
                 </li>
             </ol>
         </div>
