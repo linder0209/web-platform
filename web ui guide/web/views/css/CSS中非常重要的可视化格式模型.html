@@ -199,13 +199,12 @@
               <h2>position: absolute定位元素的包含块</h2>
                 <p>总的来说，绝对定位（"position: absolute"）元素的包含块由离它最近的 'position' 属性为 'absolute'、'relative' 或者 'fixed' 的祖先元素创建。</p>
                 <p>如果其祖先元素是行内元素，则包含块取决于其祖先元素的 'direction' 特性</p>
-                <p>1). 如果 'direction' 是 'ltr'，包含块的顶、左边是祖先元素生成的第一个框的顶、左内边距边界(padding edges) ，
-                    右、下边是祖先元素生成的最后一个框的右、下内边距边界(padding edges)，看以下例子：</p>
+                <p><strong>1). 如果 'direction' 是 'ltr'，包含块的顶、左边是祖先元素生成的第一个框的顶、左内边距边界(padding edges) ，右、下边是祖先元素生成的最后一个框的右、下内边距边界(padding edges)</strong>，看以下例子：</p>
                 <pre>
 <div style="border: 1px solid #CCCCCC;padding: 40px;width:200px;">
     祖先元素
     <span style="border:1px solid #00BEEE;color: #ED2754;position:relative;padding: 20px;">
-        相对定位的行内元素，其子元素ABC的包含块应该是SPAN 形成的第一个框（即第一行）的顶、左内边距边，
+        相对定位的行内元素，其子元素ABC的包含块顶、左边应该是SPAN 形成的第一个框（即第一行）的顶、左内边距边，
         ABC包含块的右、下边是 SPAN 生成的最后一个框（最后一行）的右、下内边距边界
         <i style="position: absolute;top:0;left:0;color: deeppink;font-weight: bold; ">A</i>
         <i style="position: absolute;top: 20px; left:0;color: #009ec3;font-weight: bold; ">B</i>
@@ -216,9 +215,9 @@
                 <div style="border: 1px solid #CCCCCC;padding: 40px;width:200px;">
                     祖先元素
                     <span style="border:1px solid #00BEEE;color: #ED2754;position:relative;padding: 20px;">
-                        相对定位的行内元素，其子元素ABC的包含块应该是SPAN 形成的第一个框（即第一行）的顶、左内边距边，
+                        相对定位的行内元素，其子元素ABC的包含块顶、左边应该是SPAN 形成的第一个框（即第一行）的顶、左内边距边，
                         ABC包含块的右、下边是 SPAN 生成的最后一个框（最后一行）的右、下内边距边界
-                        <i style="position: absolute;top:0;left:0;color: deeppink;font-weight: bold; ">A</i>
+                    <i style="position: absolute;top:0;left:0;color: deeppink;font-weight: bold; ">A</i>
                         <i style="position: absolute;top: 20px; left:0;color: #009ec3;font-weight: bold; ">B</i>
                         <i style="position: absolute;bottom:0; right:0;color: #B266B2;font-weight: bold; ">C</i>
                     </span>
@@ -227,19 +226,6 @@
                     从以上例子可以看出，对于'direction' 是 'ltr'，即文字从左向右排列，行内元素形成的包含块是指行内元素第一个框的顶、左内边距边（padding的外层，border的内边）
                     和最后一个框的右、下内边距边界（padding的外侧，border的内边），除了firefox，其他浏览器都按这一规则处理的。而firefox中表现的是，
                 行内元素形成的包含块是指行内元素第一个框的顶、左内边距边（padding的外层，border的内边）和第一个框的右、下内边距边界（padding的外侧，border的内边），<span class="h-web-font-red">只在第一个框里</span>。 </p>
-                <p>当然，包含块的宽度可能是<span class="h-web-font-red">负的</span>。这种情况下ie6和ie7和其他浏览器表现的不一样，看以下例子：</p>
-                
-                <div style="border: 1px solid #CCCCCC;padding: 40px;width:200px;">
-                    祖先元素祖先元素祖先元素
-                    <span style="border:1px solid #00BEEE;color: #ED2754;position:relative;padding: 20px;">
-                        相对定位的行内元素，其子元素ABC的包含块应该是SPAN 形成的第一个框（即第一行）的顶、左内边距边，
-                        ABC包含块的右、下边是 SPAN 生成的最后一个框（最后一行）的右、下内边距边界
-                        <i style="position: absolute;top:0;left:0;color: deeppink;font-weight: bold; ">A</i>
-                        <i style="position: absolute;top: 20px; left:0;color: #009ec3;font-weight: bold; ">B</i>
-                        <i style="position: absolute;bottom:0; right:0;color: #B266B2;font-weight: bold; ">C</i>
-                    </span>
-                </div>
-                <p>以上的边界无法围成一个区域，在这种情况下，包含块的宽度是负的。</p>
                 <p>以下是非firefox和firefox下的截图</p>
                 <div style="display: table-row;">
                     <div style="display: table-cell;">
@@ -251,9 +237,64 @@
                         <div style="text-align: center;">firefox下行内元素形成的包含块</div>
                     </div>
                 </div>
+            <p>当然，包含块的宽度可能是<span class="h-web-font-red">负的</span>。这种情况下各浏览器表现的又不太一样，主要是ie6和ie7，看以下例子：</p>
                 
-                http://www.w3help.org/zh-cn/kb/008/
-          </div>
+                <div style="border: 1px solid #CCCCCC;padding: 40px;width:200px;">
+                    祖先元素祖先元素祖先元素
+                    <span style="border:1px solid #00BEEE;color: #ED2754;position:relative;padding: 20px;">
+                        相对定位的行内元素，其子元素ABC的包含块顶、左边应该是SPAN 形成的第一个框（即第一行）的顶、左内边距边，
+                        ABC包含块的右、下边是 SPAN 生成的最后一个框（最后一行）的右、下内边距边界
+                    <i style="position: absolute;top:0;left:0;color: deeppink;font-weight: bold; ">A</i>
+                        <i style="position: absolute;top: 20px; left:0;color: #009ec3;font-weight: bold; ">B</i>
+                        <i style="position: absolute;bottom:0; right:0;color: #B266B2;font-weight: bold; ">C</i>
+                    </span>
+                </div>
+                <p>以上的边界无法围成一个区域，在这种情况下，包含块的宽度是负的。</p>
+                <p><strong>2). 如果 'direction' 是 'rtl'，包含块的顶、右边是祖先元素生成的第一个框的顶、右内边距边界 (padding edges) ，左、下边是祖先元素生成的最后一个框的左、下内边距边界 (padding edges)</strong>，还用上面的例子来分析，只是把direction设为rtl</p>
+                <pre>
+<div style="border: 1px solid #CCCCCC;padding: 40px;width:200px;direction:rtl;" >
+    祖先元素
+    <span style="border:1px solid #00BEEE;color: #ED2754;position:relative;padding: 20px;">
+        相对定位的行内元素，其子元素ABC的包含块顶、右边应该是SPAN 形成的第一个框（即第一行）的顶、右内边距边，
+                        ABC包含块的左、下边是 SPAN 生成的最后一个框（最后一行）的左、下内边距边界
+        <i style="position: absolute;top:0;left:0;color: deeppink;font-weight: bold; ">A</i>
+        <i style="position: absolute;top: 20px; left:0;color: #009ec3;font-weight: bold; ">B</i>
+        <i style="position: absolute;bottom:0; right:0;color: #B266B2;font-weight: bold; ">C</i>
+    </span>
+</div>
+                </pre>
+            <div style="border: 1px solid #CCCCCC;padding: 40px;width:200px;direction:rtl;">
+                    祖先元素
+                    <span style="border:1px solid #00BEEE;color: #ED2754;position:relative;padding: 20px;">
+                        相对定位的行内元素，其子元素ABC的包含块顶、右边应该是SPAN 形成的第一个框（即第一行）的顶、右内边距边，
+                        ABC包含块的左、下边是 SPAN 生成的最后一个框（最后一行）的左、下内边距边界
+                    <i style="position: absolute;top:0;right:0;color: deeppink;font-weight: bold; ">A</i>
+                        <i style="position: absolute;top: 20px; right:0;color: #009ec3;font-weight: bold; ">B</i>
+                        <i style="position: absolute;bottom:0; left:0;color: #B266B2;font-weight: bold; ">C</i>
+                    </span>
+                </div>
+                <p>同样这种情况下，浏览器也是不兼容的，不兼容行类似于第一点中提到的。</p>
+                <p>其他情况下，如果祖先元素不是行内元素，那么包含块的区域应该是祖先元素的内边距边界，看以下例子</p>
+ <pre>
+ <div name="container" style="border: 1px solid #CCCCCC;padding: 40px;width:200px;position:relative;">
+    祖先元素
+    <div name="father" style="width:100%; height:100%; border:2px solid #00BEEE;">
+        父节点
+        <div name="son" style="border:1px solid deeppink; position:absolute; left:0; top:0;">absolute element</div>
+    </div>
+</div>
+ </pre>
+            
+                <div name="container" style="border: 1px solid #CCCCCC;padding: 40px;width:200px;position:relative;">
+                    祖先元素
+                    <div name="father" style="width:100%; height:100%; border:2px solid #00BEEE;">
+                        父节点
+        				<div name="son" style="border:1px solid deeppink; position:absolute; left:0; top:0;">absolute element</div>
+    				</div>
+                </div>
+                <p>上面例子中，son 的父元素虽是 father，但是按照标准它的包含块应该是 container。</p>
+				<p><a href="http://www.w3help.org/zh-cn/kb/008/">原文地址</a></p>
+                </div>
         </div>
     </body>
 </html>
