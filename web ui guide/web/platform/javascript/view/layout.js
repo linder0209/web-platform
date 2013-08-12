@@ -195,6 +195,7 @@
                 hash += '|' + nodeId;
             }
             window.location.hash = hash;
+			var root = window.location.href.replace(/\/index\.html.*/, '');
             var directory = path.replace(/\/[^\/]+\.html/, '');
             $.get(path, function(req, status, res) {
                 var source = res.responseText;
@@ -203,7 +204,9 @@
                 repSource = repSource.match(/<(body)[^>]*>(.|\s)*<\/\1>/ig)[0];
                 repSource = repSource.replace(/<\/?body.*>/ig, ""); //Remove body tag
                 //替换a标签和img标签相对路径，该正则表达式的意思是：替换href或src中的值，并且该值开头不是http或#。该例子中用到了零宽断言
-                repSource = repSource.replace(/((href|src)=["'])(?!(http|#))/ig, '$1' + directory + '/');
+                repSource = repSource.replace(/((href|src)=["'])(?!(http|#|\/))/ig, '$1' + directory + '/');
+				//替换绝对路径，加上root
+				repSource = repSource.replace(/((href|src)=["'])\//ig, '$1' + root + '/');
                 //替换样式中图片背景
                 repSource = repSource.replace(/(url\(\s*["']?\s*)(?!(http|#|data))/ig, '$1' + directory + '/');
                 //repSource = repSource.replace(/\/\//g,'/');

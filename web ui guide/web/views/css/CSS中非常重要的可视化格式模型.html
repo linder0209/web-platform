@@ -317,18 +317,49 @@
                 <pre>
 <div style="border: 1px solid #006699;padding: 10px;">
     Some text
-    <div style="border: 1px solid #00b7ea;">More text</div>
+    <p style="border: 1px solid #00b7ea;">More text</p>
 </div>
                 </pre>
                 <div style="border: 1px solid #006699;padding: 10px;">
                     Some text
-                    <div style="border: 1px solid #00b7ea;">More text</div>
+                    <p style="border: 1px solid #00b7ea;">More text</p>
                 </div>
                 <p>上面例子中div包含行内内容和块内容。为了使格式化简单一些，我们假定有一个匿名块框围绕在"Some text"周围，如图：</p>
-                <div style="text-align: center;">
+              <div style="text-align: center;">
                     <img src="images/anon-block.png" />
-                    <div style="text-align: center;">上面的图中有 3 个框，最外层div 的 box，内层div 的 box，以及包含 “Some text” 的匿名块框。</div>
+                    <div style="text-align: center;">上面的图中有 3 个框，最外层div 的 box，内层p 的 box，以及包含 “Some text” 的匿名块框。</div>
                 </div>
+                <p>如果一个块框（如上例中为DIV生成的框）在其中包含另外一个块框（如上例中的P），那么，我们强迫它只能包含块框。因此，上面的 “Some text” 被强制加到一个匿名的块框里面。</p>
+                <p>当一个行内框包含一个块框(block box)时，这个行内框 (inline box)（和与它处于同一行框内的祖先行内框）会围绕着块框被截断。断点之前和之后的行框(line boxes)会被封闭到匿名的框里，并且，这个块框会成为这些匿名框的兄弟框。当这样的行内框受到相对定位的影响时，相对定位也会影响块框。看下面例子</p>
+                <pre><div style="border: 1px solid #006699;padding: 10px;margin:5px;color:#F6F;font-weight:bolder;">
+                   <span style="border: 1px solid #00b7ea;position:relative;left:20px;top:8px;margin:10px;">This is anonymous text before the P.
+                       <p style="border: 1px solid green;">This is the content of P.</p>
+                         This is anonymous text after the P.
+                   </span>
+                </div></pre>
+              <div style="border: 1px solid #006699;padding: 10px;margin:5px;color:#F6F;font-weight:bolder;">
+                   <span style="border: 1px solid #00b7ea;position:relative;left:20px;top:8px;margin:10px;">This is anonymous text before the P.
+                       <p style="border: 1px solid green;">This is the content of P.</p>
+                         This is anonymous text after the P.
+                   </span>
+                </div>
+                <p>上述例子中，span 元素包含匿名文本区块C1，后跟块级元素p ，最后是匿名文本区块C2。最外层div形成的块框围绕着span，包含 C1 的匿名块框，p 的块框，和另一个包含 C2 的匿名块框。</p>
+                <p><span class="h-web-font-red">注意，行框(line box)和行内框(inline box)是两个不同的概念</span>。</p>
+                <p>匿名框的特性(properties)从包含它的非匿名框那里继承而来（比如，上例中，匿名框会继承包含它的 div 特性）。非继承属性会使用初始值。比如，字体，匿名框会从div继承，但是margin（非继承属性）值会是 0 。<br>
+匿名框不会影响元素的原有特性设置。如 span 设置了 border，产生匿名框后，C1 C2还是被蓝色的边框包围。</p>
+
+<h4>匿名行内框</h4>
+                <p>首先看下面的例子：</p>
+                
+              <p style="border: 1px solid #006699;padding: 10px;">Some <em>emphasized</em> text</p>
+                <p>p元素生成一个块控制框，其内有几个行内框。"emphasized"的框是一个行内元素（&lt;em&gt;）产生的行内框，而其它的框（"Some"和"text"）是块级元素（p）产生的行内框，后者就称为匿名行内控制框，因为它们没有与之相关的行内元素，所以，这些框被叫做匿名行内框。</p>
+                <p>这样的行内框从其父块框那里继承可以继承的属性。非继承属性取它们的初始值。例子中，初始匿名框的颜色继承自p，而背景是透明的。</p>
+              <p>空格内容会根据 'white-space' 特性被压缩，不会创建任何匿名行内框。</p>
+                <p>匿名行内框和匿名块框可以被统称为匿名框。</p>
+              <p>在格式化 table 时，会形成更多的匿名框。</p>
+                
+                <h4>插入框</h4>
+                <p>插入框指的是display设置为run-in形成的框，参见之前写的 <a href="/index.html#css|css_6" target="_blank">css的display属性</a>中的run-in</p>
             </div>
             
         </div>
