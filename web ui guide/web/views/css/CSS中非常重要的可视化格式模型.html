@@ -10,16 +10,17 @@
 
         <link type="text/css" rel="stylesheet" href="../../platform/javascript/syntaxhighlighter/styles/shCoreDefault.css"/>
 
-        <script type="text/javascript" src="../../platform/javascript/jquery/jquery.js"></script>
-
-        <script type="text/javascript" src="../../platform/javascript/syntaxhighlighter/scripts/shCore.js"></script>
-        <script type="text/javascript" src="../../platform/javascript/syntaxhighlighter/scripts/shBrushXml.js"></script>
-        <script type="text/javascript" src="../../platform/javascript/syntaxhighlighter/scripts/shBrushJScript.js"></script>
         <style>
             body{
                 padding:10px;
             }
         </style>
+
+        <script type="text/javascript" src="../../platform/javascript/jquery/jquery.js"></script>
+
+        <script type="text/javascript" src="../../platform/javascript/syntaxhighlighter/scripts/shCore.js"></script>
+        <script type="text/javascript" src="../../platform/javascript/syntaxhighlighter/scripts/shBrushXml.js"></script>
+        <script type="text/javascript" src="../../platform/javascript/syntaxhighlighter/scripts/shBrushJScript.js"></script>
         <script type="text/javascript">
             $(function() {
                 $('.h-web-catalogue li a').click(function(e) {
@@ -62,16 +63,7 @@
             <li><a paragraph href="#">可视化格式模型介绍</a></li>
             <li><a paragraph href="#">包含块(containing block)</a></li>
             <li><a paragraph href="#">控制框(Controlling box)</a></li>
-            <li><a paragraph href="#">CSS 字体</a></li>
-            <li><a paragraph href="#">CSS 列表</a></li>
-            <li><a paragraph href="#">CSS 表格</a></li>
-            <li><a paragraph href="#">CSS 轮廓</a></li>
-            <li><a paragraph href="#">关于CSS 框模型即盒子模型的一些注意事项</a></li>
-            <li><a paragraph href="#">CSS 定位和CSS 浮动</a></li>
-            <li><a paragraph href="#">CSS 选择器</a></li>
-            <li><a paragraph href="#">CSS中其他一些样式</a></li>
-            <li><a paragraph href="#">CSS 参考手册</a></li>
-
+            <li><a paragraph href="#">常规流( Normal flow )</a></li>
         </ol>
         <div class="h-web-paragraph">
             <h3 paragraph>可视化格式模型介绍</h3>
@@ -302,7 +294,7 @@
                     匿名块框（ Anonymous block boxes）、匿名行内框（Anonymous inline boxes）、插入框以及
                     <a href="http://www.w3.org/html/ig/zh/wiki/CSS2#propdef-display" title="">'display'</a> 属性。</p>
                 <h4>块级元素和块框</h4>
-              <p>块级元素是指文档中被格式化为块的元素，如：p，div等。
+                <p>块级元素是指文档中被格式化为块的元素，如：p，div等。
                     元素display某些选项值会形成块级元素，主要有：'block'，'list-item'，'run-in'（某些时候是块级元素，需要根据上下文来判断），以及'table'。</p>
                 <p><span class="h-web-font-red">块框</span>(block box)：是指每个块级元素会生成基于上下文格式化的主框，该框会为子孙元素建立包含块，生成内容。并且该主框也是涉及所有定位体系的框。
                     某些块级元素在主块框之外会生成额外的框，比如：'list-item'元素，这些额外的框是基于这些主框来定位的，比如li中前面的小点或是数字等。</p>
@@ -325,7 +317,7 @@
                     <p style="border: 1px solid #00b7ea;">More text</p>
                 </div>
                 <p>上面例子中div包含行内内容和块内容。为了使格式化简单一些，我们假定有一个匿名块框围绕在"Some text"周围，如图：</p>
-              <div style="text-align: center;">
+                <div style="text-align: center;">
                     <img src="images/anon-block.png" />
                     <div style="text-align: center;">上面的图中有 3 个框，最外层div 的 box，内层p 的 box，以及包含 “Some text” 的匿名块框。</div>
                 </div>
@@ -337,31 +329,240 @@
                          This is anonymous text after the P.
                    </span>
                 </div></pre>
-              <div style="border: 1px solid #006699;padding: 10px;margin:5px;color:#F6F;font-weight:bolder;">
-                   <span style="border: 1px solid #00b7ea;position:relative;left:20px;top:8px;margin:10px;">This is anonymous text before the P.
-                       <p style="border: 1px solid green;">This is the content of P.</p>
-                         This is anonymous text after the P.
-                   </span>
+                <div style="border: 1px solid #006699;padding: 10px;margin:5px;color:#F6F;font-weight:bolder;">
+                    <span style="border: 1px solid #00b7ea;position:relative;left:20px;top:8px;margin:10px;">This is anonymous text before the P.
+                        <p style="border: 1px solid green;">This is the content of P.</p>
+                        This is anonymous text after the P.
+                    </span>
                 </div>
                 <p>上述例子中，span 元素包含匿名文本区块C1，后跟块级元素p ，最后是匿名文本区块C2。最外层div形成的块框围绕着span，包含 C1 的匿名块框，p 的块框，和另一个包含 C2 的匿名块框。</p>
                 <p><span class="h-web-font-red">注意，行框(line box)和行内框(inline box)是两个不同的概念</span>。</p>
                 <p>匿名框的特性(properties)从包含它的非匿名框那里继承而来（比如，上例中，匿名框会继承包含它的 div 特性）。非继承属性会使用初始值。比如，字体，匿名框会从div继承，但是margin（非继承属性）值会是 0 。<br>
-匿名框不会影响元素的原有特性设置。如 span 设置了 border，产生匿名框后，C1 C2还是被蓝色的边框包围。</p>
+                    匿名框不会影响元素的原有特性设置。如 span 设置了 border，产生匿名框后，C1 C2还是被蓝色的边框包围。</p>
 
-<h4>匿名行内框</h4>
+                <h4>匿名行内框</h4>
                 <p>首先看下面的例子：</p>
-                
-              <p style="border: 1px solid #006699;padding: 10px;">Some <em>emphasized</em> text</p>
+
+                <p style="border: 1px solid #006699;padding: 10px;">Some <em>emphasized</em> text</p>
                 <p>p元素生成一个块控制框，其内有几个行内框。"emphasized"的框是一个行内元素（&lt;em&gt;）产生的行内框，而其它的框（"Some"和"text"）是块级元素（p）产生的行内框，后者就称为匿名行内控制框，因为它们没有与之相关的行内元素，所以，这些框被叫做匿名行内框。</p>
                 <p>这样的行内框从其父块框那里继承可以继承的属性。非继承属性取它们的初始值。例子中，初始匿名框的颜色继承自p，而背景是透明的。</p>
-              <p>空格内容会根据 'white-space' 特性被压缩，不会创建任何匿名行内框。</p>
+                <p>空格内容会根据 'white-space' 特性被压缩，不会创建任何匿名行内框。</p>
                 <p>匿名行内框和匿名块框可以被统称为匿名框。</p>
-              <p>在格式化 table 时，会形成更多的匿名框。</p>
-                
+                <p>在格式化 table 时，会形成更多的匿名框。</p>
+
                 <h4>插入框</h4>
-                <p>插入框指的是display设置为run-in形成的框，参见之前写的 <a href="/index.html#css|css_6" target="_blank">css的display属性</a>中的run-in</p>
+                <p>插入框指的是display设置为run-in形成的框，参见之前写的 <a href="/index.html#css|css_4" target="_blank">css的display属性</a>中的run-in</p>
             </div>
-            
+            <h3 paragraph>常规流( Normal flow )</h3>
+            <div>
+                <p>在常规流中的框（boxes，元素形成的矩形区域），都属于一个格式化的上下文中，可能是块的，也可能是行内的，但不可能同时是行内的又是块的。块框参与块格式化上下文，
+                    行内框参与行内格式化上下文。</p>
+                <h4>块格式化上下文( Block formatting context )</h4>
+                <h5>触发方式</h5>
+                <p>浮动元素、绝对定位元素，'display' 特性为 "inline-block"，"table-cell"， "table-caption" 的元素，以及 'overflow' 不是 "visible" 的元素，会创建新的块格式化上下文。</p>
+                <ul>
+                    <li>浮动元素</li>
+                    <li>绝对定位元素</li>
+                    <li>行内块元素</li>
+                    <li>单元格</li>
+                    <li>表格标题元素</li>
+                    <li>overflow 非 "visible"的元素</li>
+                </ul>
+                <p>注意，是这些元素创建了块格式化上下文，它们本身不是块格式化上下文。</p>
+                <p>在CSS3中，对这个概念做了改动：<a href="http://www.w3.org/TR/css3-box/#block-level0" target="_blank">http://www.w3.org/TR/css3-box/#block-level0</a></p>
+                <p>CSS3中，将Block formatting context 叫做 flow root。对于触发方式也做了修改（官方中是这样修改的）：</p>
+                <p>A flow root is a box that satisfies at     least one of the following: </p>
+                <ul>
+                    <li>The value of &lsquo;<a href="http://www.w3.org/TR/css3-box/#float">float</a>&rsquo;      is not &lsquo;<a href="http://www.w3.org/TR/css3-box/#none0">none</a>&rsquo;. </li>
+                    <li>The <em><a href="http://www.w3.org/TR/css3-box/#used-value.">used value</a></em> of &lsquo;<a href="http://www.w3.org/TR/css3-box/#overflow0">overflow</a>&rsquo; is not &lsquo;<a href="http://www.w3.org/TR/css3-box/#visible0">visible</a>&rsquo;. </li>
+                    <li>The value of &lsquo;<a href="http://www.w3.org/TR/css3-box/#display">display</a>&rsquo; is &lsquo;<a href="http://www.w3.org/TR/css3-box/#table-cell">table-cell</a>&rsquo;, &lsquo;<a href="http://www.w3.org/TR/css3-box/#table-caption">table-caption</a>&rsquo; (see <a href="http://www.w3.org/TR/css3-box/#CSS3TBL" rel="biblioentry">[CSS3TBL]</a>),      &lsquo;<a href="http://www.w3.org/TR/css3-box/#inline-block">inline-block</a>&rsquo; or &lsquo;<a href="http://www.w3.org/TR/css3-box/#inline-table">inline-table</a>&rsquo;. </li>
+                    <li>The value of &lsquo;<a href="http://www.w3.org/TR/css3-box/#position">position</a>&rsquo; is neither &lsquo;static&rsquo; nor &lsquo;relative&rsquo; (see <a href="http://www.w3.org/TR/css3-box/#CSS3POS" rel="biblioentry">[CSS3POS]</a>). </li>
+                    <li>The value of &lsquo;<a href="http://www.w3.org/TR/css3-box/#block-progression">block-progression</a>&rsquo; is &lsquo;lr&rsquo; or &lsquo;rl&rsquo; and      the value of &lsquo;<a href="http://www.w3.org/TR/css3-box/#block-progression">block-progression</a>&rsquo; of its parent box      is &lsquo;tb&rsquo; </li>
+                    <li>The value of &lsquo;<a href="http://www.w3.org/TR/css3-box/#block-progression">block-progression</a>&rsquo; is &lsquo;tb&rsquo; and the value of &lsquo;<a href="http://www.w3.org/TR/css3-box/#block-progression">block-progression</a>&rsquo; of its parent box      is &lsquo;lr&rsquo; or &lsquo;rl&rsquo;. </li>
+                </ul>
+                <p class="h-web-font-red">最后两点不是很明白</p>
+                <p>可见，CSS3中的描述更加准确，position在 &lsquo;fixed&rsquo; 的时候也会创建 flow root。这并不是CSS2.1的疏忽，因为 position:fixed 本身就是 position:absolute 的一个子类。</p>
+                <p>注意，display:table 本身并不产生 block formatting contexts。但是，它可以产生匿名框，其中包含 display:table-cell 的框会产生 block formatting context。总之，对于 display:table 的元素，产生 block formatting contexts 的是匿名框而不是 display:table。</p>
+                <h5>作用及现实意义</h5>
+                <p>块格式化上下文是一个比较抽象的概念。可以把它想象成一个大箱子，很多元素装在里面，箱子把它们和外面的元素隔开。</p>
+                <p>块格式化上下文是个重要的概念，它对宽高的计算，外边距折叠，定位等都有一定的影响。</p>
+                <p>在块格式化上下文中，框会一个接一个地被垂直放置，它们的起点是一个包含块的顶部。 两个兄弟框之间的垂直距离取决于 'margin' 特性。在块格式化上下文中相邻的块级元素的垂直外边距会折叠( collapse )。</p>
+                <p>在块格式化上下文中，每一个元素左外边与包含块的左边相接触（对于从右到左的格式化，右外边接触右边）， 即使存在浮动也是如此（尽管一个元素的内容区域会由于浮动而压缩），除非这个元素也创建了一个新的块格式化上下文。</p>
+                <p>它与普通的块框类似，不同之处在于：</p>
+                <ul>
+                    <li>可以包含浮动元素</li>
+                    <li>可以阻止外边距折叠</li>
+                    <li>可以防止元素被浮动元素覆盖</li>
+                </ul>
+                <h4>行内格式化上下文( <a href="http://www.w3.org/TR/CSS2/visuren.html#inline-formatting" target="_blank">Inline formatting context </a>)</h4>
+                <h5>行框( line boxes )</h5>
+                <p>相对于块格式化上下文，在行内格式化上下文中，框( boxes )一个接一个地水平排列，起点是包含块的顶部。 水平方向上的 margin，border 和 padding 在框之间得到保留。 框在垂直方向上可以以不同的方式对齐：它们的顶部或底部对齐，或根据其中文字的基线对齐。 包含那些框的长方形区域，会形成一行，叫做行框。看以下例子</p>
+                <pre>
+<p style="background-color:silver; font-size:30px;">
+    TEXT1 <span style="border:3px solid blue;">text in span</span>
+    great1 <em style="border:3px solid red;">thx a lot</em>
+    bee <strong style="border:3px solid green;">give me 5!</strong> Aloha!
+</p></pre>
+                <p style="background-color:silver; font-size:30px;">
+                    TEXT1 <span style="border:3px solid blue;">text in span</span>
+                    great1 <em style="border:3px solid red;">thx a lot</em>
+                    bee <strong style="border:3px solid green;">give me 5!</strong> Aloha!
+                </p>
+                <p>以上例子中，无换行符，共形成了 7 个行内框，看下图</p>
+                <img src="images/line_box.png" alt="" />
+                <p>行框的宽度由它的包含块和其中的浮动元素决定。高度的确定由行高度计算规则决定。</p>
+                <h5>行内框的对齐</h5>
+                <p>行内框的对齐包括水平和垂直对齐</p>
+                <ol>
+                    <li>行内框在行框中垂直方向上的对齐
+                        <p>行框的高度总是足够容纳所包含的所有框。不过，它可能高于它包含的最高的框（例如，框对齐会引起基线对齐）。 当一个框 B 的高度小于包含它的行框的高度时，
+                            B 在行框中垂直方向上的对齐决定于<a href="http://www.w3.org/TR/CSS2/visudet.html#propdef-vertical-align" target="_blank"> 'vertical-align' 特性</a>。 
+                            'vertical-align'默认值为基线( 'baseline' )对齐。看下面例子：</p>
+                        <pre>
+<p style="background-color:silver; width:500px;line-height: normal; ">
+    <span style="border:1px solid blue; font-size:50px;">text in span</span>
+    <em style="border:1px solid yellow; font-size:30px; vertical-align:top;">great1</em>
+</p>
+                        </pre>
+                        <p style="background-color:silver; width:500px;line-height: normal; ">
+                            <span style="border:1px solid blue; font-size:50px;">text in span</span>
+                            <em style="border:1px solid yellow; font-size:30px; vertical-align:top;">great1</em>
+                        </p>
+                        <p>上例中由于设置了vertical-align:top;所形成的行内框内容的顶端与行中最高元素的顶外边界对齐。如下图</p>
+                        <img src="images/line_box_align.png" alt="" />
+                    </li>
+                    <li>行内框在行框中水平方向上的对齐
+                        <p>当一行中行内框宽度的总和小于包含它们的行框的宽，它们在水平方向上的对齐，取决于 'text-align' 特性。
+                            如果其值是 'justify'，用户端也可以拉伸行内框(除了 'inline-table' 和 'inline-block' 框)中的空间和文字 。看以下例子：
+                        </p>
+                        <pre>
+<p style="background-color:silver; width:500px;overflow:hidden; text-align:center;line-height: normal; ">
+    <span style="border:1px solid blue; font-size:50px; float:left;">FLOAT</span>
+    <em style="border:1px solid yellow; font-size:30px;">great1</em>
+    <span style="border:1px solid yellow;">good</span>
+</p>
+                        </pre>
+                        <p style="background-color:silver; width:500px;overflow:hidden; text-align:center;line-height: normal; ">
+                            <span style="border:1px solid blue; font-size:50px; float:left;">FLOAT</span>
+                            <em style="border:1px solid yellow; font-size:30px;">great1</em>
+                            <span style="border:1px solid yellow;">good</span>
+                        </p>
+                        <p>浮动元素缩短了当前的行框，并且行内框在对齐的时候是根据行框的宽度，居中对齐。如下图</p>
+                        <img src="images/inline_box_horizontal_align.png" alt="" />
+                    </li>
+                </ol>
+
+                <h5>行框的范围</h5>
+                <p>通常，行框的左边接触到其包含块的左边，右边接触到其包含块的右边。
+                    然而，浮动元素可能会处于包含块边缘和行框边缘之间。 
+                    尽管在相同的行内格式化上下文中的行框通常拥有相同的宽度（包含块的宽度），
+                    但是它们可能会因浮动元素缩短了可用宽度， 而在宽度上发生变化。同一行内格式化上下文中的行框通常高度不一样（如，一行包含了一个高的图形，而其它行只包含文本）。
+                    看下面例子：
+                </p>
+                <pre>
+<p style="background-color:silver; width:500px; overflow:hidden;line-height: normal; ">
+    <span style="border:1px solid blue; font-size:50px; float:left;">FLOAT</span>
+    <em style="border:1px solid yellow; font-size:30px;">great1</em>
+    <span style="border:1px solid yellow;">good</span>
+</p>
+                </pre>
+                <p style="background-color:silver; width:500px; overflow:hidden;line-height: normal; ">
+                    <span style="border:1px solid blue; font-size:50px; float:left;">FLOAT</span>
+                    <em style="border:1px solid yellow; font-size:30px;">great1</em>
+                    <span style="border:1px solid yellow;">good</span>
+                </p>
+                <p>由于p中第一个元素设置了float为left，所以行框宽度相应的缩小了，看下图</p>
+                <img src="images/scope_line_box.png" alt="" />
+                <h5>行内框可能被分割</h5>
+                <p>如果几个行内框在水平方向无法放入一个行框内，它们可以分配在两个或多个垂直堆叠的行框中。因此，一个段落就是行框在垂直方向上的堆叠。 行框在堆叠时没有垂直方向上的分割且永不重叠。</p>
+                <p>如果一个行内框超出包含它的行框的宽度，它会被分割成几个框，并且这些框会被分布到几个行框内。如果一个行框不能被分割（例如， 行内框只包含单个字符，或者语言特殊的断字规则不允许在行内框里换行，或者行内框受到带有 "nowrap" 或 "pre" 值的 'white-space' 特性的影响），这时，行内框会溢出行框。</p>
+                <p>如果一个行内框被分割，margin、padding 和 border 在所有分割处没有视觉效果。</p>
+                <p>行内框还可能由于双向文本处理（bidirectional text processing）而在同一个行框内被分割为好几个框。</p>
+                <p>看下面的例子，我们重新设置一下p的宽度</p>
+                <pre>
+<p style="background-color:silver; width:100px;line-height: normal; text-indent:0; ">
+    <span style="border:1px solid blue; font-size:40px;">text in span</span>
+    <em style="border:1px solid yellow; font-size:30px; vertical-align:top;">great1</em>
+</p>
+                </pre>
+                <p style="background-color:silver; width:100px;line-height: normal; text-indent:0; ">
+                    <span style="border:1px solid blue; font-size:40px;">text in span</span>
+                    <em style="border:1px solid yellow; font-size:30px; vertical-align:top;">great1</em>
+                </p>
+                <p>上面例子中，由于行框宽度限制为100px，第一个 span 元素形成的行内框，被分割成了 3 段。</p>
+                <h5>空的行内框应该被忽略</h5>
+                <p>不包含文本，保留空白符，margin/padding/border 非0的行内元素，以及其他常规流中的内容(比如，图片，inline blocks 和 inline tables)， 
+                    并且不是以换行结束的行框，必须被当作零高度行框对待。就外边距折叠而言，这种行框必须被忽略。看下面例子：</p>
+                <pre>
+<div style="border: 1px solid #00BEEE;padding: 10px;">
+    <div style="border:1px solid red; width:100px;margin-bottom:20px;">DIV1</div>
+    <span><em><strong></strong></em></span>
+    <div style="border:1px solid red; width:100px;margin-top:20px;">DIV2</div>
+</div>
+                </pre>
+                <div style="border: 1px solid #00BEEE;padding: 10px;">
+                    <div style="border:1px solid red; width:100px;margin-bottom:20px;">DIV1</div>
+                    <span><em><strong></strong></em></span>
+                    <div style="border:1px solid red; width:100px;margin-top:20px;">DIV2</div>
+                </div>
+                <p>span和其中的空行内框都被忽略。</p>
+                <h4>常规流中相对定位( Relative positioning )</h4>
+                <h5>在常规流中的占位</h5>
+                <p>一个框按照常规流或者是浮动定位后，它还可以相对该位置而偏移。 这就是相对定位。按照这种方式偏移一个框(B1)不会对后续的框(B2)有影响：</p>
+                <ul>
+                    <li>B2 在定位时，就好象 B1 没有发生偏移一样</li>
+                    <li>B1 偏移后，B2 不会重新定位</li>
+                </ul>
+                <p>相对定位元素处于常规流中，相对于元素在常规流中的原位置进行定位，偏移后，在常规流中依然占据原有位置。</p>
+                <p>这也意味着相对定位可能产生框的重叠。在<a href="/index.html#css|css_6" target="_blank">CSS定位体系详解</a> 中有相对定位的例子， 例子中红色的框 B 将其下面蓝色的框 C 覆盖了。</p>
+                <h5>溢出包含块</h5>
+                <p>如果相对定位引起 "overflow:auto" 或 "overflow:scroll" 框的溢出，浏览器必须允许用户访问内容，既，创建需要的滚动条，这可能会影响布局。看下面例子：</p>
+                <pre>
+<div style="width:200px; height:200px; overflow:auto; border:2px solid #00BEEE;">
+    <div style="width:20px; height:20px; background-color: greenyellow; position:relative; top:100px; left:100px;">A</div>
+</div>
+                </pre>
+                <div style="width:200px; height:200px; overflow:auto; border:2px solid #00BEEE;">
+                    <div style="width:20px; height:20px; background-color: greenyellow; position:relative; top:200px; left:200px;">A</div>
+                </div>
+                <p>其中，块 A 在定位的时候，溢出了包含块的显示范围。根据标准，应该出现滚动条，以保证用户可以正常的访问 A 中的内容。但上面的例子存在兼容性问题，ie7（包括）以下版本没有按照标准处理。</p>
+                <h5>相对定位元素的尺寸</h5>
+                <p>相对定位元素的尺寸，会保持它在常规流中的尺寸。包括换行以及原来为它保留的位置。</p>
+                <h5>如何定位及计算偏移后的值</h5>
+                <p><strong>'left' 和 'right' 的特性值</strong></p>
+                <p>对于一个相对定位的元素，'left' 和 'right' 会水平的位移框而不会改变它的大小。'left' 会将框向右移动，'right' 会将框向左移动。 由于 'left' 或者 'right' 不会造成框被拆分或者拉伸，所以，计算后的值( computed value )总是：left = -right。</p>
+                <p><strong>1). 'left' 和 'right' 的设定值都是 "auto"</strong></p>
+                <p>如果 'left' 和 'right' 的值都是 "auto" （它们的初始值），计算后的值( computed value )为 0（例如，框区留在其原来的位置）。</p>
+                <p><strong>2). 'left' 或 'right' 其一的设定值为 "auto"</strong></p>
+                <p>如果 left 为 &lsquo;auto&rsquo;，计算后的值(computed value)为 right 的负值（例如，框区根据 right 值向左移）。 如果 right 被指定为 &lsquo;auto&rsquo;，其计算后的值(computed value)为 left 值的负值。</p>
+                <p>例子：</p>
+                <pre>
+<div style="border:2px solid #00BEEE;">
+    <div style="width:20px; height:20px; background-color:red; position:relative; left:100px;"></div>
+</div>
+                </pre>
+                <div style="border:2px solid #00BEEE;">
+                    <div style="width:20px; height:20px; background-color:red; position:relative; left:100px;"></div>
+                </div>
+                <p>上述例子中，div 元素是相对定位的元素，它的 'left' 值是 "100px"， 'right' 没有设置，默认为 "auto"，那么，'right' 特性计算后的值应该是 -left，即 "right:-100px"。</p>
+                <p><strong>3). 'left' 和 'right' 设定值都不是 "auto"</strong></p>
+                <p>如果 'left' 和 'right' 都不是 "auto"，那么定位就显得很牵强，其中一个不得不被舍弃。如果包含块的 'direction' 属性是 "ltr"， 那么 'left' 将获胜，'right' 值变成 -left。如果包含块的 'direction' 属性是 &lsquo;rtl&rsquo;，那么 'right' 获胜，'left' 值将被忽略。例子：</p>
+                <pre>
+<div style="width:100px; height:50px;border:1px solid #00BEEE;">
+    <div style="width:20px; height:20px; background-color:red; position:relative; left:60px; right:60px;"></div>
+</div>
+                </pre>
+                <div style="width:100px; height:50px;border:1px solid #00BEEE;">
+                    <div style="width:20px; height:20px; background-color:red; position:relative; left:60px; right:60px;"></div>
+                </div>
+                <p>上例中，显然left应该比较强悍才对。</p>
+                <p><strong>'top' 和 'bottom' 的特性值</strong></p>
+                <p>'top' 和 'bottom' 特性将相对定位元素向上或者向下移动，而不改变其大小。'top' 把框向下移动，而 'bottom' 将其向上移动。 
+                    由于 'top' 和 'bottom' 没有造成框被拆分或者拉伸，计算值总是 top=-bottom，如果两个都是 "auto"，其计算值就都是 0，如果其中之一是 auto，它就是另一个的负值。 
+                    如果都不是 "auto"，'bottom' 被忽略，这时，'bottom' 的计算值会是 'top' 值的负值。处理的规则跟left和right是一样的。</p>
+                <p>注意：在脚本环境中，动态移动相对定位框区能够产生动画效果（结合“visibility属性”）。虽然相对定位可以用于创建上标或者下标，行高并不会被自动调整以适应定位需要。</p>
+                <p>&nbsp;</p>
+            </div>
         </div>
     </body>
 </html>

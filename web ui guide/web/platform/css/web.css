@@ -47,7 +47,7 @@
 }
 .h-web-paragraph h5:before{
     counter-increment:sub2_section;/*每显示一个h5，则 sub2_section 增量一次*/
-    content:counter(section) "." counter(sub1_section) ". " counter(sub2_section) " ";
+    content:counter(section) "." counter(sub1_section) "." counter(sub2_section) " ";
 }
 
 .h-web-paragraph h3, .h-web-paragraph-title{
