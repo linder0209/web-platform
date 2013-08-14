@@ -7,9 +7,178 @@
         <link rel="stylesheet" href="../../platform/css/platform.css" type="text/css"/>
         <link rel="stylesheet" href="../../platform/css/theme/skyblue.css" type="text/css"/>
         <link rel="stylesheet" href="../../platform/css/web.css" type="text/css"/>
+        <link type="text/css" rel="stylesheet" href="../../platform/javascript/syntaxhighlighter/styles/shCoreDefault.css"/>
+        <style>
+            body{
+                padding:10px;
+            }
+        </style>
+        <script type="text/javascript" src="../../platform/javascript/jquery/jquery.js"></script>
+        <script type="text/javascript" src="../../platform/javascript/syntaxhighlighter/scripts/shCore.js"></script>
+        <script type="text/javascript" src="../../platform/javascript/syntaxhighlighter/scripts/shBrushXml.js"></script>
+        <script type="text/javascript" src="../../platform/javascript/syntaxhighlighter/scripts/shBrushJScript.js"></script>
+        <script type="text/javascript">
+            $(function() {
+                $('.h-web-catalogue li a').click(function(e) {
+                    e.preventDefault();
+                    var paragraphNum,
+                            paragraph,
+                            offset;
+                    var el = this;
+                    $(this).closest('ol').find('li a').each(function(index, element) {
+                        if (this === el) {
+                            paragraphNum = index;
+                            return false;
+                        }
+                    });
+                    paragraph = $('.h-web-paragraph h3[paragraph]').eq(paragraphNum);
+                    offset = paragraph.offset();
+                    if (offset) {
+                        $(window).scrollTop(offset.top);
+                    }
+                });
+                //初始化内容折叠事件
+                $('.h-web-paragraph').on('click', 'h3[paragraph]', function(e) {
+                    $(this).next().toggle();
+                });
+
+                //SyntaxHighlighter
+                $('pre').replaceWith(function() {
+                    var html = '<pre type="syntaxhighlighter" class="brush: js; html-script: true; quick-code: false; toolbar : false" >';
+                    html += $(this).html();
+                    html += '</pre>';
+                    return html;
+                });
+                SyntaxHighlighter.highlight();
+            });
+        </script>
     </head>
     <body>
+        <h3 class="h-web-paragraph-title">目录</h3>
+        <ol class="h-web-catalogue">
+            <li><a paragraph href="#">浮动( Float )概述</a></li>
+            <li><a paragraph href="#">浮动( Float )特性</a></li>
+            <li><a paragraph href="#">'display'、'position' 和 'float' 的相互关系</a></li>
+        </ol>
         <div class="h-web-paragraph">
+            <h3 paragraph>浮动( Float )概述</h3>
+            <div>
+                <p>浮动框就是一个框在当前行被向左或向右挪动(偏移)，它不在常规流中。浮动框由浮动元素的框组成，它是一个块级框，而不论它本身是何种元素。
+                    浮动框的宽度会尽可能的窄（根据内容来计算其宽度，如果没有内容也没有设置该浮动层的宽度，则该浮动层在页面中是看不见的）。
+                    另外，假如在一行之上只有极少的空间可供浮动元素渲染时，那么这个元素会跳至下一行，这个过程会持续到某一行拥有足够的空间为止。
+                </p>
+                <h4>浮动和文字环绕</h4>
+                <p>浮动框( 'float', 'floated' or 'floating' box )最有趣的特性是内容(Line Box)可以沿着它的边缘渲染
+                    （设置 'clear' 属性可以禁止此特性 ）。 内容排列在沿着左浮动框的右边排列，而沿着右浮动框的左边排列，也就是我们常说的文字环绕效果。看下面的例子：</p>
+                <pre>
+ <div style="border:1px solid #0066cc;width:200px;padding:10px;">
+    <span style="float: left;width:100px; height:100px; background-color:green; margin:20px;"></span>
+    The IMG box is floated to the left. The content that follows is formatted to the
+    right of the float, starting on the same line as the float.
+</div>
+                </pre>
+                <div style="border:1px solid #0066cc;width:200px;padding:10px;">
+                    <span style="border:1px solid #008200;">The IMG box is floated to the left. The content that follows is formatted to the
+                        right of the float, starting on the same line as the float.</span>
+                    <span style="float: left;width:100px; height:100px; background-color:green; margin:20px;"></span>
+                    <span style="border:1px solid #008200;">The IMG box is floated to the left. The content that follows is formatted to the
+                        right of the float, starting on the same line as the float.</span>
+                </div>
+                <p>上面的例子显示的效果是文字围绕着绿块的外边界（margin）排列</p>
+                <h4>浮动框的位置</h4>
+                <p>一个浮动框，会被向左或向右偏移，直到它的外边界接触到它包含块的内边界（padding）或另一个浮动元素的外边界， 如果存在一个行框，浮动框的顶边会和当前行框的顶部对齐。
+
+                    如果水平方向没有足够的空间放置浮动元素，它将向下移动，直到有足够的空间或没有更多的浮动元素为止。看下面的例子：</p>
+                <pre>
+<div style="border:1px solid #0066cc;padding:10px;height:260px;width:250px;">
+    <span style="border:1px solid #009900;">
+        <span style="float: left;width:100px; height:100px; background-color:green; margin:20px;"></span>
+        <span style="float: left;width:100px; height:100px; background-color:green; margin:20px;"></span>
+        <span>This is a inline box</span>
+    </span>
+</div>
+                </pre>
+                <div style="border:1px solid #0066cc;padding:10px;height:260px;width:250px;">
+                    <span style="border:1px solid #009900;">
+                        <span style="float: left;width:100px; height:100px; background-color:green; margin:20px;"></span>
+                        <span style="float: left;width:100px; height:100px; background-color:green; margin:20px;"></span>
+                        <span>This is a inline box</span>
+                    </span>
+                </div>
+                <h4>浮动元素会缩短行框</h4>
+                <p>
+                    由于浮动框并不在常规流中，在该浮动框之前或之后创建的非定位框垂直排列，就好象浮动框并不存在一样（类似于绝对定位，但与绝对定位处理后续元素的规则又不太一样）。 
+                    然而，浮动框之后创建的行框会被缩短，为浮动框提供空间。如果被缩短的行框无法再容纳更多的内容， 它将向下移动，直到有足够的空间或没有更多的浮动元素为止。
+                    当前行里浮动框前的任何内容，都将被重新排列到该浮动另一侧的第一个可用行里。 也就是说，如果在遇到左浮动框之前，行内框被放置到行上，剩余的行框空间足够容纳该左浮动框，
+                    那么，左浮动框就会被放置在该行上， 并与该行框的顶端对齐，然后，已经在行上的行内框被相应地移动到该浮动框的右侧（右侧成了该左浮动框的另一侧），反之亦然，对于 rtl 和右浮动框也是一样。</p>
+                <p>如上文字环绕浮动元素的例子，包含文字的行框被缩短，是包含块减去浮动元素的外边距 margin 的宽度。其中，"The content" 两字，分别被放到了两行， 因为，一行中的剩余空间无法再容纳 "content"。
+                </p>
+                <h4>TABLE 元素、块级替换元素、BFC元素和浮动元素</h4>
+                <p>TABLE 元素、块级替换元素或者在常规流中创建了块格式化上下文的元素，它们的 border box在同一个块格式化上下文中，
+                    如果有足够的空间， 这些块元素会紧临浮动元素放置，如果没有最够的空间，这些块元素会放置到浮动元素的下面，但是一定不会覆盖浮动元素的。看下面的例子：</p>
+                <pre>
+<div name="C" style="border: 1px solid #0078ae;width: 200px;overflow: hidden;">
+    <div name="A" style="width:50px; height:50px; background-color: #e0e0e0; margin:20px; float:left;">A</div>
+    <div name="B" style=" width:50px; background-color: #CCEAFE; overflow:hidden;">B</div>
+</div>
+                </pre>
+                <div name="C" style="border: 1px solid #0078ae;width: 200px;overflow: hidden;">
+                    <div name="A" style="width:50px; height:50px; background-color: #e0e0e0; margin:20px; float:left;">A</div>
+                    <div name="B" style=" width:50px; background-color: #CCEAFE; overflow:hidden;">B</div>
+                </div>
+                <p>这时，B 的宽度为 50px，它和浮动元素 A 的包含块都是 C，宽度为 200px。浮动元素在放置后，还有足够的空间放置 B，所以，B 被紧挨着 A 的 margin 框被放置。增大 B 的宽度至 150px 后：</p>
+                <pre>
+<div name="C" style="border: 1px solid #0078ae;width: 200px;overflow: hidden;">
+    <div name="A" style="width:50px; height:50px; background-color: #e0e0e0; margin:20px; float:left;">A</div>
+    <div name="B" style=" width:150px; background-color: #CCEAFE; overflow:hidden;">B</div>
+</div>
+                </pre>
+                <div name="C" style="border: 1px solid #0078ae;width: 200px;overflow: hidden;">
+                    <div name="A" style="width:50px; height:50px; background-color: #e0e0e0; margin:20px; float:left;">A</div>
+                    <div name="B" style=" width:150px; background-color: #CCEAFE; overflow:hidden;">B</div>
+                </div>
+            </div>
+            <h3 paragraph>浮动( Float )特性</h3>
+            <div>
+                <p>浮动有以下值</p>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>值</td>
+                            <td>left | right | none | inherit</td>
+                        </tr>
+                        <tr>
+                            <td>初始值</td>
+                            <td>none</td>
+                        </tr>
+                        <tr>
+                            <td>适用于</td>
+                            <td>所有元素</td>
+                        </tr>
+                        <tr>
+                            <td>可否继承</td>
+                            <td>否</td>
+                        </tr>
+                        <tr>
+                            <td>百分比</td>
+                            <td>N/A</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <h4>适用元素</h4>
+                <p>可设置给任意元素，但只适用于生成非绝对定位框的元素（<span class="h-web-font-red">请记住绝对定位元素优先级最高</span>），看以下例子：</p>
+
+                <div style="width:500px; height:150px; border:1px solid #0078ae; position:relative;padding:10px;">
+                    <div style="width:100px; height:100px; float:right; position:absolute; border:1px solid #009900;top:10px;left:10px;">同时设置了absolute和float:right</div>
+                    <div style="width:100px; height:100px; float:right; position:relative; border:1px solid #003399;top:5px;left:5px;">同时设置了relative和float:right</div>
+                </div>
+                <p>从以上例子效果看，对于绝对定位的元素，浮动没有任何效果，按照标准，float此时的值为"none"，这也体现了浮动和绝对定位之间的一种平衡。
+                   而相对定位和浮动同时出现时，两种效果都会产生，上例中向右移动，并在此基础上便宜left 5px top 5px。
+                </p>
+                <p>注意：<span class="h-web-font-red">绝对定位left和top的计算是从包含块的border边界开始的，如果没有显示设置left和top，则left和top默认值
+                        为包含块的padding大小，而相对定位是按padding边界计算的。</span></p>
+                <h4>特值的含义</h4>
+            </div>
         </div>
     </body>
 </html>
