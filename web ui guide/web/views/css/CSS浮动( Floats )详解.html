@@ -175,8 +175,9 @@
                 <p>从以上例子效果看，对于绝对定位的元素，浮动没有任何效果，按照标准，float此时的值为"none"，这也体现了浮动和绝对定位之间的一种平衡。
                    而相对定位和浮动同时出现时，两种效果都会产生，上例中向右移动，并在此基础上便宜left 5px top 5px。
                 </p>
-                <p>注意：<span class="h-web-font-red">绝对定位left和top的计算是从包含块的border边界开始的，如果没有显示设置left和top，则left和top默认值
-                        为包含块的padding大小，而相对定位是按padding边界计算的。</span></p>
+                <p>注意：<span class="h-web-font-red">
+                        绝对定位left和top的计算是从包含块的border边界开始的，如果没有显式设置left和top，则left和top默认值
+                        为包含块的padding大小，而相对定位是按padding边界计算的，如果没有显式设置left和top，则left和top默认值为0。</span></p>
                 <h4>特值的含义</h4>
             </div>
         </div>
