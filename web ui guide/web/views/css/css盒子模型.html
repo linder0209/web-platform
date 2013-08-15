@@ -17,6 +17,10 @@
                 counter-increment:sub1_section;
                 content: counter(sub1_section) " ";
             }
+            .h-web-paragraph h5:before{
+                counter-increment:sub2_section;
+                content:counter(sub1_section) "." counter(sub2_section) " ";
+            }
         </style>
         <div class="h-web-paragraph">
             <p>关于css盒子模型，以前总是不太清楚，尤其对于margin和padding老是混淆。其实主要是没有系统的学习一下，没有理解其内在实现和布局结构。我们只要掌握了盒子模型中的几个属性，就会自然而然地学会了css盒子模型，再练习一下demo，就可以完全掌握其实现原理。首先通过一张flash来看一下盒子模型中margin、background-color、background-image、border和padding，以及他们之间的关系。</p>
@@ -56,10 +60,11 @@
             <p><a href="http://www.w3.org/TR/CSS2/box.html#collapsing-margins" target="_blank">Collapsing margins</a>，即外边距折叠，指的是毗邻的两个或多个外边距 (margin) 会合并成一个外边距。</p>
             <p>其中所说的 margin 毗邻，可以归结为以下两点：</p>
             <ul>
-              <li>这两个或多个外边距<strong>没有被</strong>非空内容、padding、border 或 clear <strong>分隔开</strong>。</li>
-              <li>这些 margin 都处于普通流中2。</li>
+                <li>这两个或多个外边距<strong>没有被非空内容、padding、border 或 clear 分隔开</strong>。</li>
+                <li>这些 margin 都处于普通流中。</li>
             </ul>
-            <p></p>
+            <p>下面详细介绍其折叠规则</p>
+            <h5>两个或多个毗邻的普通流中的块元素垂直方向上的 margin 会折叠</h5>
         </div>
     </body>
 </html>
