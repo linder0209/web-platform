@@ -266,7 +266,7 @@
                     </span>
                 </div>
                 <p>同样这种情况下，浏览器也是不兼容的，不兼容行类似于第一点中提到的。</p>
-                <p>其他情况下，如果祖先元素不是行内元素，那么包含块的区域应该是祖先元素的内边距边界，看以下例子</p>
+                <p>其他情况下，如果祖先元素不是行内元素，那么包含块的区域应该是祖先元素的内边距边界（<span class="h-web-font-red">指的是border和padding之间，即padding的外边界</span>），看以下例子</p>
                 <pre>
  <div name="container" style="border: 1px solid #CCCCCC;padding: 40px;width:200px;position:relative;">
     祖先元素
@@ -285,7 +285,7 @@
                     </div>
                 </div>
                 <p>上面例子中，son 的父元素虽是 father，但是按照标准它的包含块应该是 container。</p>
-                <p><a href="http://www.w3help.org/zh-cn/kb/008/">原文地址</a></p>
+                <p class="h-web-font-red">注意：包含块的边界是border和padding之间，即padding的外边界。</p>
             </div>
             <h3 paragraph>控制框(Controlling box)</h3>
             <div>

@@ -59,9 +59,12 @@
             <li><a paragraph href="#">三种定位体系简介</a></li>
             <li><a paragraph href="#">选择定位方案：'position' 特性</a></li>
             <li><a paragraph href="#">'display'、'position' 和 'float' 的相互关系</a></li>
+            <li><a paragraph href="#">绝对定位( Absolute positioning )</a></li>
+            <li><a paragraph href="#">固定定位( Fixed positioning )</a></li>
+
         </ol>
         <div class="h-web-paragraph">
-            <h3 paragraph>三种定位体系简介</h3>
+            <h3 paragraph>三种定位体系简介</h3> 
             <div>
                 <p>框( box )布局影响因素之一，便是定位体系。定位体系也是其最为重要的影响因素。</p>
                 <p> CSS2.1 中，一个框可以根据三种定位体系布局。CSS2.1 中的定位体系使文档布局更容易实现，而并不需要使用标记的手段（如，不可见的图片）达到布局的效果。</p>
@@ -284,7 +287,57 @@ $(function() {
                     在IE下打印display的值是inline，不过实际布局是按照块级元素来处理的。</p>
                 <h4>元素是根元素</h4>
                 <p>如果元素是根元素，'display' 的值按照转换对应表设置。</p>
-                <h4>其他情况按照指定的 'display' 特性值处理</h4>
+                <h4>其他情况按照指定的 'display' 特性值处理            </h4>
+            </div>
+            <h3 paragraph>绝对定位( Absolute positioning )</h3>
+            <div>
+                <h4>参照元素</h4>
+                <p>绝对定位（Absolute positioning）元素定位的参照物是其包含块，既相对于其包含块进行定位，不一定是其父元素。看下面的例子：</p>
+                <pre>
+<div style="position:relative; width:300px; height:300px; background-color:silver; border:5px solid red;">
+    <div style="width:100px; height:100px; background-color:blue;">position: static</div>
+    <div style="margin:0 0 0 100px; width:200px; height:200px; background-color:gold;">
+        <div style="position:absolute; left:100px; top:100px; width:100px; height:100px; background-color:green;">position : absolute</div>
+    </div>
+</div>
+                </pre>
+                <div style="position:relative; width:300px; height:300px; background-color:silver; border:5px solid red;">
+                    <div style="width:100px; height:100px; background-color:blue;">position: static</div>
+                    <div style="margin:0 0 0 100px; width:200px; height:200px; background-color:gold;">
+                        <div style="position:absolute; left:100px; top:100px; width:100px; height:100px; background-color:green;">position : absolute</div>
+                    </div>
+                </div>
+                <p>示意图</p>
+                <img src="images/absolute_positioned.png" alt="" />
+                <h4>绝对定位元素完全脱离了常规流</h4>
+                <p>绝对定位元素完全脱离了常规流（对后继的兄弟节点没有影响）。</p>
+                <p>常规流中的框，都在同一个层上，浮动框是处于常规流之上的一个特殊层，它可能会对常规流中的框的定位产生影响。但绝对定位的框不会， 每个绝对定位的框都可以看做一个单独的图层，不会对其他层框的定位产生影响。这与层叠级别和层叠上下文有关。</p>
+                <p>有一点需要注意，那就是绝对元素定位的 top 和 left 值跟绝对元素未脱离常规流之前在常规流中位置有关。</p>
+                <p>例子：</p>
+                <pre>
+<div style="border: 1px solid #006699;position: relative;height:150px;padding:10px;">
+    <div style="position:absolute; width:100px; height:100px; background-color:red;"> absolute</div>
+    <div style="height:50px; border:1px solid blue; width:200px;">DIV 中的普通文本元素</div>
+    <div style="position:absolute; left:60px; width:100px; height:100px; background-color:green;"> absolute</div>
+</div>
+                </pre>
+                <div style="border: 1px solid #006699;position: relative;height:150px;padding:10px;">
+                    <div style="position:absolute; width:100px; height:100px; background-color:red;"> absolute</div>
+                    <div style="height:50px; border:1px solid blue; width:200px;">DIV 中的普通文本元素</div>
+                    <div style="position:absolute; left:60px; width:100px; height:100px; background-color:green;"> absolute</div>
+                </div>
+
+                <p>两个绝对定位框中间的 DIV 在常规流中，影响了后面的绝对定位元素的位置，但没有受到其前面的绝对定位框的影响。</p>
+                <h5>绝对定位框生成的包含块</h5>
+                <p>一个绝对定位框会为它的常规流子元素和定位子元素(不包含 fiexed 定位的元素)生成一个新的包含块。 不过，绝对定位元素的内容不会在其它框的周围排列。</p>
+                <h5>层叠级别</h5>
+                <p>绝对定位框可能会掩盖另一个框的内容，或者被另外一个框掩盖，这取决于互相重合的框的层叠级别（z-index）。</p>
+            </div>
+            <h3 paragraph>固定定位( Fixed positioning )</h3>
+            <div>
+                <p>固定定位是绝对定位的一个子类。唯一的区别是，对于固定定位框，它的包含块由可视窗口( viewport1 )创建。对于连续媒介，固定定位框并不随着文档的滚动而移动。从这个意义上说，它们类似于固定的背景图形。对于页面媒介，固定定位框在每页里重复。对于需要在每一页底部放置一个签名时，这个方法非常有用。
+                    注意，IE6 中不支持固定定位( Fixed positioning )定位，通常的做法是使用绝对定位代替，并使用 Javascript 脚本控制绝对定位框的位置，使随页面滚动而相应的变化。
+                    以下示例代码是修改自 W3C 官方使用固定定位布局的一个例子：</p>
             </div>
         </div>
     </body>

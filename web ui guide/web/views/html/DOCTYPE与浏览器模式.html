@@ -102,9 +102,9 @@
             </div>
             <h3 paragraph>DOCTYPE类型</h3>
             <div>
-                <p>DOCTYPE标签可声明三种 DTD 类型，分别表示严格版本、过渡版本以及基于框架的 HTML 文档。</p>
+                <p>DOCTYPE标签可声明许多种 DTD 类型，下面说说几个常用模式（严格版本、过渡版本以及基于框架的 HTML 文档）。</p>
 
-                <p>下面以HTML 4.01来说明一下，HTML 4.01 规定了三种文档类型：Strict、Transitional 以及 Frameset。</p>
+                <p>以HTML 4.01为例，HTML 4.01 规定了三种文档类型：Strict、Transitional 以及 Frameset。</p>
                 <h4>HTML Strict DTD</h4>
                 <p>如果您需要干净的标记，免于表现层的混乱，请使用此类型。请与层叠样式表（CSS）配合使用：</p>
                 <pre>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "  http://www.w3.org/TR/html4/strict.dtd"&gt;</pre>
@@ -115,10 +115,9 @@
                 <h4>Frameset DTD</h4>
                 <p>Frameset DTD 应当被用于带有框架的文档。除 frameset 元素取代了 body 元素之外，Frameset DTD 等同于 Transitional DTD：</p>
                 <pre>&lt;!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "  http://www.w3.org/TR/html4/frameset.dtd"&gt;</pre>
-                <p>除了以上三种，html5中规定了简单的定义</p>
-                <h4>HTML5 DTD            </h4>
+                <p>另外现在推荐的标准模式是                &lt;!DOCTYPE html&gt;</p>
                 <pre>&lt;!DOCTYPE html&gt;</pre>
-                <p class="h-web-font-red">项目中建议使用html5 DTD，并且确保写在页面的第一行，只在default.jsp中声明即可，ajax加载的页面不用再加入。</p>
+                <p class="h-web-font-red">项目中建议使用&lt;!DOCTYPE html&gt;，并且确保写在页面的第一行，只在default.jsp中声明即可，ajax加载的页面不用再加入。</p>
             </div>
             <h3 paragraph>DOCTYPE 的选择</h3>
             <div>
@@ -178,6 +177,7 @@
             </div>
             <h3 paragraph>建议</h3>
             <p>通过上面的历史回顾以及分析，我们看到了 DOCTYPE 对于目前主流浏览器的关键作用，同时也发掘了能够触发各浏览器标准模式的最佳 DOCTYPE。标准模式会使不同浏览器之间发生兼容性问题的风险降至最低，选择正确的 DOCTYPE 以及保证 DOCTYPE 在 HTML 文档中绝对开头的位置则是使 DOCTYPE 发挥其正确作用的关键。</p>
+            <p>这里推荐一篇文章，写的很好。<a href="http://www.w3help.org/zh-cn/kb/001/" target="_blank">兼容性问题与浏览器的内核及渲染模式</a></p>
 
         </div>
     </body>
