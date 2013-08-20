@@ -187,8 +187,6 @@
                     <div style="margin-top:50px; background-color:gold;">B</div>
                 </div>
             </div>
-            <p>示意图</p>
-            <img src="images/margin c5.png" alt="" />
             <p>两个绿色的块儿之间，相距100px，而若 B 和它的浮动包含块发生 margin 折叠的话，金色的条应该位于绿色块的最上方，显然，没有发生折叠。</p>
             <h5>创建了块级格式化上下文的元素，不和它的子元素发生 margin 折叠</h5>
             <p>下面以 “overflow : hidden” 的元素为例：</p>
@@ -208,18 +206,18 @@
             <h5>元素自身的 margin-bottom 和 margin-top 相邻时也会折叠</h5>
             <p>自身 margin-bottom 和 margin-top 相邻，只能是自身内容为空，垂直方向上 border、padding 为 0。看下面的例子：</p>
             <pre>
-<div style="border: 1px solid #3A9EA7;">
+<div style="border: 1px solid #3A9EA7;padding: 10px;">
     <div style="border:1px solid red; width:100px;">
         <div style="margin-top: 100px;margin-bottom: 50px;"></div>
     </div>
 </div>
             </pre>
-            <div style="border: 1px solid #3A9EA7;">
+            <div style="border: 1px solid #3A9EA7;padding: 10px;">
                 <div style="border:1px solid red; width:100px;">
                     <div style="margin-top: 100px;margin-bottom: 50px;"></div>
                 </div>
             </div>
-            <p>以上代码运行后，我们讲得到的是红色边框的正方形，方框的宽高都应该是 100px，高度不应该是 150px。</p>
+            <p>上面例子中，我们得到的是红色边框是正方形，方框的宽高都应该是 100px，高度不应该是 150px。</p>
             <p>关于margin折叠各大浏览器存在兼容性问题，尤其是ie6和ie7。</p>
         </div>
     </body>
