@@ -4,7 +4,6 @@
  */
 package com.hopefuture.caipiao.fc3d;
 
-import com.hopefuture.caipiao.ssq.*;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -27,7 +26,8 @@ public class Fc3dAnalyse {
 
     /**
      * 处理数据
-     * @throws Exception 
+     *
+     * @throws Exception
      */
     public static void sourceToDestData() throws Exception {
         StringBuilder sb = new StringBuilder();
@@ -48,7 +48,7 @@ public class Fc3dAnalyse {
             sb.append(strArray[0]);
             sb.append(":");
             str = Arrays.toString(strArray2);
-            sb.append(str.substring(1,8));
+            sb.append(str.substring(1, 8));
             sb.append("\n");
         }
         reader.close();
@@ -58,7 +58,7 @@ public class Fc3dAnalyse {
         fout.write(b);
         fout.close();
     }
-    
+
     /**
      * 统计各种情况出现的次数
      *
@@ -108,7 +108,7 @@ public class Fc3dAnalyse {
             hm.put("" + i, 0);
         }
 
-        File sourceFile = new File(filePath + "source2.txt");
+        File sourceFile = new File(filePath + "2013.txt");
         BufferedReader reader = new BufferedReader(new FileReader(sourceFile));
         String str;
         String[] arrayStr;
@@ -158,7 +158,7 @@ public class Fc3dAnalyse {
      */
     public static void statGroup6Data() throws Exception {
         Map<String, Integer> hm = new HashMap<String, Integer>();
-        
+
         File sourceFile = new File(filePath + "source2.txt");
         BufferedReader reader = new BufferedReader(new FileReader(sourceFile));
         String str;
@@ -167,11 +167,14 @@ public class Fc3dAnalyse {
         while (reader.ready()) {
             str = reader.readLine().split(":")[1];
             arrayStr = str.split(",");
+            if (repeat(arrayStr)) {
+                continue;
+            }
             Arrays.sort(arrayStr);
             str2 = Arrays.toString(arrayStr);
-            if(hm.containsKey(str2)){
+            if (hm.containsKey(str2)) {
                 hm.put(str2, hm.get(str2) + 1);
-            }else{
+            } else {
                 hm.put(str2, 1);
             }
         }
@@ -195,55 +198,32 @@ public class Fc3dAnalyse {
         fout.close();
     }
 
-
-    /**
-     * 计算给定数据查看历史数据中是否出现过
-     *
-     * @throws Exception
-     */
-    public static void countRepetitive2Data() throws Exception {
-        File sourceFile = new File(filePath + "source.txt");
-        BufferedReader reader = new BufferedReader(new FileReader(sourceFile));
-        String str;
-        while (reader.ready()) {
-            str = reader.readLine().substring(6, 23);
-            Combination combination = new Combination();
-            String[] data = {"3", "5", "14", "19", "20", "26", "30"};
-            combination.select(6, data);
-            List<String> results = combination.getResults();
-            for (String string : results) {
-                if (str.equals(string)) {
-                    System.out.println(str);
-                }
-            }
-        }
-    }
-
     /**
      * 比较两个数是否是一种组合
+     *
      * @param num1
      * @param num2
-     * @return 
+     * @return
      */
-    private static boolean judgeNum(String num1,String num2){
+    private static boolean judgeNum(String num1, String num2) {
         boolean b = false;
         String[] arrNum1 = num1.split(",");
         String[] arrNum2 = num2.split(",");
-        
+
         Arrays.sort(arrNum1);
         Arrays.sort(arrNum2);
 
         String compare1 = arrNum1[0] + arrNum1[1] + arrNum1[2];
         String compare2 = arrNum2[0] + arrNum2[1] + arrNum2[2];
-        
-        if (compare1.equals(compare2)){
+
+        if (compare1.equals(compare2)) {
             b = true;
         }
         return b;
     }
-    
+
     /**
-     * 组合
+     * 生成所有排列3组合
      */
     private static void combination() throws Exception {
         Map<String, Integer> hm = new HashMap<String, Integer>();
@@ -256,28 +236,27 @@ public class Fc3dAnalyse {
             arrayStr = str.split(",");
             Arrays.sort(arrayStr);
             str = Arrays.toString(arrayStr);
-            if(!list.contains(str)){
+            if (!list.contains(str)) {
                 list.add(str);
             }
         }
-        
+
         StringBuilder sb = new StringBuilder();
         for (String string : list) {
             sb.append(string).append("\n");
         }
-        
+
         File destFile = new File(filePath + "dest4.txt");
         FileOutputStream fout = new FileOutputStream(destFile);
         byte[] b = sb.toString().getBytes();
         fout.write(b);
         fout.close();
     }
-    
+
     /**
-     * 组合，去掉重号
+     * 从所有排列3组合中去掉重号
      */
     private static void combinationClearDouble() throws Exception {
-        Map<String, Integer> hm = new HashMap<String, Integer>();
         List<String> list = new ArrayList<String>();
         String str;
         String[] arrayStr;
@@ -292,26 +271,26 @@ public class Fc3dAnalyse {
             str = Arrays.toString(arrayStr).replaceAll(" ", "");
             int len = str.length();
             str = str.substring(1, len - 1);
-            if(!list.contains(str)){
+            if (!list.contains(str)) {
                 list.add(str);
             }
         }
-        
+
         StringBuilder sb = new StringBuilder();
         for (String string : list) {
             sb.append(string).append("\n");
         }
-        
+
         File destFile = new File(filePath + "dest5.txt");
         FileOutputStream fout = new FileOutputStream(destFile);
         byte[] b = sb.toString().getBytes();
         fout.write(b);
         fout.close();
-        
+
     }
-    
+
     /**
-     * 给定范围，统计前 historyPeriods 期没有开出的结果再接下来多少期会中奖
+     * 给定范围，统计前 historyPeriods 期没有开出的结果再接下来多少期会中奖 比如 3,5,7 在前100期没有出现过，那么接下来多少期会开出，统计结果是23
      */
     public static void successPeriods() throws Exception {
         List<String> source = new ArrayList<String>();
@@ -335,7 +314,7 @@ public class Fc3dAnalyse {
             data.add(issue);
         }
         reader.close();
-        
+
         //频率最高的组合
         sourceFile = new File(filePath + "rate.txt");
         reader = new BufferedReader(new FileReader(sourceFile));
@@ -344,8 +323,8 @@ public class Fc3dAnalyse {
             rate.add(reader.readLine());
         }
         reader.close();
-        
-        
+
+
         int size = data.size();
         File stat1 = new File(filePath + "stat1.txt");
         FileOutputStream fout = new FileOutputStream(stat1);
@@ -355,8 +334,8 @@ public class Fc3dAnalyse {
         }
         fout.close();
     }
-    
-    public static void statSucess(int historyPeriods, List<String> source, List<String[]> data, List<String> rate, int startIndex, FileOutputStream fout)  throws Exception {
+
+    public static void statSucess(int historyPeriods, List<String> source, List<String[]> data, List<String> rate, int startIndex, FileOutputStream fout) throws Exception {
         //统计
         List<String> source2;//前historyPeriods期没有开出的组合
         List<String> result;
@@ -364,7 +343,7 @@ public class Fc3dAnalyse {
         cloneList(source, source2);
         int size = data.size();
         for (int i = startIndex; i < startIndex + historyPeriods; i++) {
-            if(i >= size){
+            if (i >= size) {
                 break;
             }
             source2.remove(data.get(i)[1]);
@@ -383,7 +362,7 @@ public class Fc3dAnalyse {
         //计算前historyPeriods期之后那期会开出
         int step = 0;
         for (int i = startIndex + historyPeriods; i < startIndex + historyPeriods + 5000; i++) {
-            if(i >= size){
+            if (i >= size) {
                 break;
             }
             step++;
@@ -393,20 +372,189 @@ public class Fc3dAnalyse {
                 //System.out.println("sucess,投注期数:" + step);
                 break;
             }
-        }    
+        }
     }
-    
-    
-    public static void cloneList(List<String> source, List<String> dest){
+
+    public static void cloneList(List<String> source, List<String> dest) {
         for (String str : source) {
             dest.add(str);
         }
     }
-    
-    public static void main(String... args) throws Exception {
 
-        //combinationClearDouble();
+    /**
+     * 判断是否有重复的值
+     *
+     * @param group
+     * @return
+     */
+    private static boolean repeat(String[] group) {
+        if (group[0].equals(group[1]) || group[0].equals(group[2]) || group[1].equals(group[2])) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 统计本期中奖号码（只统计组六），是否有上期开出的结果 统计结果为1918，总数为4072，几率为：47%
+     *
+     */
+    public static void statRepeatLastPeriod() throws Exception {
+        File sourceFile = new File(filePath + "source2.txt");
+        BufferedReader reader = new BufferedReader(new FileReader(sourceFile));
+        String[] arrayStr;
+        String[] priorPeriod = null;
+        boolean find;
+        int results = 0;
+        while (reader.ready()) {
+            arrayStr = reader.readLine().split(":")[1].split(",");
+            if (arrayStr[0].equals(arrayStr[1]) || arrayStr[0].equals(arrayStr[2]) || arrayStr[1].equals(arrayStr[2])) {
+                priorPeriod = arrayStr;
+                continue;
+            }
+            if (priorPeriod != null) {
+                for (int i = 0; i < 3; i++) {
+                    find = findInArray(priorPeriod, arrayStr[i]);
+                    if (find) {
+                        results++;
+                        break;
+                    }
+                }
+            }
+            priorPeriod = arrayStr;
+        }
+        reader.close();
+        System.out.println("本期中奖号码在上期中出现的次数:" + results);
+    }
+
+    /**
+     * 统计本期中奖号码（只统计组六），没有上期开出的结果（上期必须是组六） 统计结果为1481，总数为4072 - 1127 = 2945，几率为：50%
+     *
+     */
+    public static void statNoRepeatLastPeriod() throws Exception {
+        File sourceFile = new File(filePath + "2013.txt");
+        BufferedReader reader = new BufferedReader(new FileReader(sourceFile));
+        String[] arrayStr;
+        String[] priorPeriod = null;
+        boolean find = false;
+        int results = 0;
+        while (reader.ready()) {
+            arrayStr = reader.readLine().split(":")[1].split(",");
+            if (arrayStr[0].equals(arrayStr[1]) || arrayStr[0].equals(arrayStr[2]) || arrayStr[1].equals(arrayStr[2])) {
+                priorPeriod = arrayStr;
+                continue;
+            }
+            if (priorPeriod != null && !(priorPeriod[0].equals(priorPeriod[1]) || priorPeriod[0].equals(priorPeriod[2]) || priorPeriod[1].equals(priorPeriod[2]))) {
+                for (int i = 0; i < 3; i++) {
+                    find = findInArray(priorPeriod, arrayStr[i]);
+                }
+                if (!find) {
+                    results++;
+                }
+            }
+            priorPeriod = arrayStr;
+        }
+        reader.close();
+        System.out.println("本期中奖号码在上期中没有出现的次数:" + results);
+    }
+
+    /**
+     * 统计本期中奖号码（只统计组六），没有上期开出的结果（上期必须是组六），并且除去前n期开出的结果（例如100） 统计结果为1481，总数为4072 - 1127 = 2945，几率为：50%
+     *
+     */
+    public static void statNoRepeatLastPeriodDeductingHistoryPeriods() throws Exception {
+        File sourceFile = new File(filePath + "source3.txt");
+        BufferedReader reader = new BufferedReader(new FileReader(sourceFile));
+        List<String> data = new ArrayList<String>();
+        while (reader.ready()) {
+            data.add(reader.readLine().split(":")[1]);
+        }
+        reader.close();
+
+        int invest = 0;//投资
+        int retribution = 0;//回报
+        int size = data.size();
+        int historyPeriods = 100;
+        String[] arrayStr;
+        for (int i = historyPeriods; i < size - historyPeriods; i++) {
+            //上一期
+            String prior = data.get(historyPeriods - 1);
+            arrayStr = prior.split(",");
+            //如果上一期不是组选6
+            if (arrayStr[0].equals(arrayStr[1]) || arrayStr[0].equals(arrayStr[2]) || arrayStr[1].equals(arrayStr[2])) {
+                continue;
+            }
+            //计算除去上一期后的所有组合
+            List<String> newCombination = combinationDeductingPriorPeriod(prior.split(","));
+            for (int j = i - historyPeriods; j < i; j++) {
+                String _str = data.get(j);
+                if (newCombination.contains(_str)) {
+                    newCombination.remove(_str);
+                }
+            }
+            System.out.println("投入： " + newCombination.size());
+            invest += newCombination.size() * 2;
+            
+            //是否成功
+            for (String str : newCombination) {
+                if(str.equals(data.get(i))){
+                    retribution += 160;
+                    break;
+                }
+            }
+        }
         
-        successPeriods();
+        System.out.println("投入： " + invest);
+        System.out.println("回报： " + retribution);
+
+    }
+
+    private static boolean findInArray(String[] array, String value) {
+        for (int i = 0; i < 3; i++) {
+            if (value.equals(array[i])) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * 生成除去上一期开出结果的三个数字后的组合
+     *
+     * @return
+     */
+    private static List<String> combinationDeductingPriorPeriod(String[] priorPeriod) {
+        List<String> list = new ArrayList<String>();
+        int[] arrayInt = new int[7];
+        int step = 0;
+        for (int i = 0; i < 10; i++) {
+            if (i == Integer.parseInt(priorPeriod[0]) || i == Integer.parseInt(priorPeriod[1]) || i == Integer.parseInt(priorPeriod[2])) {
+                continue;
+            }
+            arrayInt[step++] = i;
+        }
+        for (int i = 0; i < 7; i++) {
+            for (int j = i + 1; j < 7; j++) {
+                for (int k = j + 1; k < 7; k++) {
+                    list.add(arrayInt[i] + "," + arrayInt[j] + "," + arrayInt[k]);
+                }
+            }
+        }
+        return list;
+    }
+
+    public static void main(String... args) throws Exception {
+        //combinationClearDouble();
+        //statGroup6Data();
+        //successPeriods();
+        //statRepeatLastPeriod();
+        //statGroup3Data();
+        //statNoRepeatLastPeriod();
+//        String[] priorPeriod = {"4", "7", "8"};
+//        List<String> list = combinationDeductingPriorPeriod(priorPeriod);
+//        for (String str : list) {
+//            System.out.println(str);
+//        }
+        
+        statNoRepeatLastPeriodDeductingHistoryPeriods();
     }
 }
